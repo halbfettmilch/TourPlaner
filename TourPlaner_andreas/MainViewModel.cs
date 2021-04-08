@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace TourPlaner_Andreas
-{
+namespace TourPlaner_andreas
+{   
     public class MainViewModel : INotifyPropertyChanged
     {
         private string _output = "Hello World!";
@@ -35,7 +35,7 @@ namespace TourPlaner_Andreas
                 }
             }
         }
-
+        
         public string Output
         {
             get

@@ -1,0 +1,111 @@
+<Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="10*" />
+        </Grid.RowDefinitions>
+
+        <!-- Label -->
+        <Label   Grid.Column="0" Margin="5" VerticalAlignment="Center">Tour-Planer</Label>
+        <!-- Menu Top -->
+        <Grid Grid.Row="1" Background="white">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Button  Grid.Column="0" Margin="5" Command="{Binding ExecuteCommand}" Height="33" Foreground="Black" VerticalAlignment="Center" >File</Button>
+            <Button  Grid.Column="1" Margin="5" Command="{Binding ExecuteCommand}"  Height="33" Foreground="Black" VerticalAlignment="Center" >Edit</Button>
+            <Button  Grid.Column="2" Margin="5" Command="{Binding ExecuteCommand}" Height="33" Foreground="Black"  VerticalAlignment="Center" >Options</Button>
+            <Button  Grid.Column="3" Margin="5" Command="{Binding ExecuteCommand}"  Height="33" Foreground="Black" VerticalAlignment="Center" >Help</Button>
+
+        </Grid>
+
+        <!-- Searchbar -->
+        <Grid Grid.Row="2" Background="white">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Margin="5" Height="25" Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center"></TextBox>
+            <Button Content="Search" HorizontalAlignment="Right" VerticalAlignment="Center" Height="33" Width="229" Grid.ColumnSpan="2"/>
+
+        </Grid>
+        <!--Body -->
+        <Grid Grid.Row="3" Background="white">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="7*" />
+            </Grid.ColumnDefinitions>
+            <!--Tours -->
+            <Grid Grid.Column="0" Background="white">
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="Tours" VerticalAlignment="Center" Height="33" Margin="2,2,2,2"/>
+                    <Button Grid.Column="1" Content="+" VerticalAlignment="Center" Height="33" Margin="2,2,2,2"/>
+                    <Button Grid.Column="2" Content="-" VerticalAlignment="Center" Height="33" Margin="2,2,2,2"/>
+                    <Button Grid.Column="3" Content="[]" VerticalAlignment="Center" Height="33" Margin="2,2,2,2"/>
+
+                </Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="9*" />
+                </Grid.RowDefinitions>
+
+
+            </Grid>
+
+
+            <!--Title+Logs -->
+            <Grid Grid.Column="1" Background="white">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <!--Title -->
+                <Grid Grid.Row="0" Background="white">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="7*" />
+                    </Grid.RowDefinitions>
+                    <Border  Grid.Row="0"  >
+                        <Label   VerticalAlignment="Center">Title</Label>
+                    </Border>
+                    <TabControl Grid.Row="1">
+                        <TabItem Header="Route">
+                            <Grid Background="#FFE5E5E5"/>
+                        </TabItem>
+                        <TabItem Header="Description">
+                            <Grid Background="#FFE5E5E5"/>
+                        </TabItem>
+                    </TabControl>
+
+                </Grid>
+                <!--TLogs -->
+                <Grid Grid.Row="1" Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="7*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Command="{Binding ExecuteCommand}" Grid.Column="1" Content="+ - []" Margin="2,2,2,2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="124" Height="37"/>
+                        <TextBox HorizontalAlignment="Stretch" Text="Logs:" TextWrapping="Wrap" VerticalAlignment="Stretch" Background="#FFD4D4D4" Grid.Column="0" Margin="2,2,2,2" TextChanged="TextBox_TextChanged"/>
+                    </Grid>
+
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>

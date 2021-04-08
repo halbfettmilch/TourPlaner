@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace TourPlaner_Andreas
+namespace TourPlaner_andreas
 { 
     public class ExecuteCommand : ICommand
     {

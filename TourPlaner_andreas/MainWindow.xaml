@@ -9,51 +9,84 @@
     <Window.DataContext>
         <local:MainViewModel />
     </Window.DataContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="20*" />
-            <RowDefinition Height="2*" />
-        </Grid.RowDefinitions>
-
-        <!-- Menu Top #3b3737 #1c1a1a -->
-        <Grid Grid.Row="0" Background="#1c1a1a">
+    <DockPanel>
+        <DockPanel DockPanel.Dock="TOP">
+            <Menu DockPanel.Dock="Right">
+                <MenuItem Header="_Help" HorizontalAlignment="Right">
+                    <MenuItem Header="_About Tour Planer"/>
+                </MenuItem>
+            </Menu>
+            <Menu DockPanel.Dock="Left">
+<MenuItem Header ="_Tour">
+    <MenuItem Header="Create"/>
+    <MenuItem Header="_Delete"/>
+    <Separator/>
+    <MenuItem Header="_Import"/>
+    <MenuItem Header="_Export"/>
+    <Separator/>
+    <MenuItem Header="_Quit"/>
+</MenuItem>
+                <MenuItem Header="_Edit">
+                    <MenuItem Header="_Duplicate"/>
+                </MenuItem>
+                <MenuItem Header="_Options">
+                    <MenuItem Header="_Properties"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <Button DockPanel.Dock="Right" Margin="5">Search</Button>
+            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5">Search</Label>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Text=""/>
+        </DockPanel>
+        <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="5*" />
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" BorderBrush="#FF000000" BorderThickness="3" CornerRadius="8" Background="#249106">
-                <TextBlock Grid.Column="1" Text="XTP" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontFamily="cursive" FontStyle="Italic"/>
-            </Border>
-            <Border Grid.Column="3" BorderBrush="#FF000000" BorderThickness="3" CornerRadius="8"  Background="#dbdbdb">
-                <TextBlock Grid.Column="1" Text="search..." Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontSize="16" Margin="5,5,5,5"/>
-            </Border>
-
-
-            <TextBlock Grid.Column="1" Text="Xtreme Tour Planer" Foreground="#1a7301" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontFamily="Verdana"/>
+            <DockPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Label DockPanel.Dock="Top" HorizontalAlignment="left" Margin="5">Tours</Label>
+                <ListBox DockPanel.Dock="Top" Margin="5">
+                    <ListBoxItem>Create a new tour...</ListBoxItem>
+                </ListBox>
+            </DockPanel>
+            <GridSplitter Grid.Column="1" Grid.Row="0" Background="#302f2d" ResizeDirection="Columns" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
+            <DockPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Label DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="5">Tour</Label>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TabControl Grid.Row="0" Margin="5">
+                        <TabItem Header="Route">
+                            <Image Width="320" Height="200"/>
+                        </TabItem>
+                       <TabItem Header="Description">
+                            <DockPanel>
+                                <Label DockPanel.Dock="Top">Title:</Label>
+                           <TextBox DockPanel.Dock="Top">enter Title here...</TextBox>
+                           <Label DockPanel.Dock="Top">Description:</Label>
+                           <TextBox DockPanel.Dock="Top">enter Description here...</TextBox>
+                            </DockPanel>
+                        </TabItem>
+                    </TabControl>
+                    <GridSplitter Grid.Row="1" Background="#302f2d" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
+                    <DataGrid Grid.Row="2">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Header="Sel"/>
+                            <DataGridTextColumn Header="Date/Time"/>
+                            <DataGridTextColumn Header="Duration"/>
+                            <DataGridTextColumn Header="Distance"/>
+                            <DataGridTextColumn Header="Rate"/>
+                            <DataGridTextColumn Header="Notes"/>
+                        </DataGrid.Columns>
+                        
+                    </DataGrid>
+                </Grid>
+            </DockPanel>
         </Grid>
-        <TabControl Grid.Row="1">
-            <TabItem Header="TabItem" Background="#1a7301">
-                <Grid Background="#3b3737"/>
-            </TabItem>
-            <TabItem Header="TabItem" Background="#1a7301">
-                <Grid Background="#3b3737"/>
-            </TabItem>
-            <TabItem Header="TabItem" Background="#1a7301">
-                <Grid Background="#3b3737"/>
-            </TabItem>
-            <TabItem Header="TabItem" Background="#1a7301">
-                <Grid Background="#3b3737"/>
-            </TabItem>
-        </TabControl>
-        
-
-        <Grid Grid.Row="2" Background="#1c1a1a">
-            
-        </Grid>
-
-
-    </Grid>
-
+    </DockPanel>
 </Window>
