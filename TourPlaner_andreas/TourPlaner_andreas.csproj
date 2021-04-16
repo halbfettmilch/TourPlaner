@@ -11,4 +11,9 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TourPlaner_andreas.BL\TourPlaner_andreas.BL.csproj" />
+    <ProjectReference Include="..\TourPlaner_andreas.Models\TourPlaner_andreas.Models.csproj" />
+  </ItemGroup>
+
 </Project>

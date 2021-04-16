@@ -4,79 +4,69 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace TourPlaner_andreas
-{   
+{
     public class MainViewModel : INotifyPropertyChanged
     {
-        private string _output = "Hello World!";
-        private string _input;
+       // public ObservableCollection<HighscoreEntry> Data { get; }
+      //      = new ObservableCollection<HighscoreEntry>();
 
-        public string Input
+        public string CurrentUsername { get; set; }
+        public string CurrentPoints { get; set; }
+        public RelayCommand AddCommand { get; }
+        public RelayCommand AddTour { get; }
+        public RelayCommand DeleteTour { get; }
+        public RelayCommand ImportTour { get; }
+        public RelayCommand ExportTour { get; }
+
+        private bool _isUsernameFocused;
+        public bool IsUsernameFocused
         {
-            get
-            {
-                Debug.Print("read Input");
-                return _input;
-            }
+            get => _isUsernameFocused;
             set
             {
-                Debug.Print("write Input");
-                if (Input != value)
-                {
-                    Debug.Print("set Input-value");
-                    _input = value;
-
-                    // it does not work to fire an event from outside in C#
-                    // can be achieved by creating a method like "RaiseCanExecuteChanged".
-                    // this.ExecuteCommand.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-
-                    // this triggers the UI and the ExecuteCommand
-                    Debug.Print("fire propertyChanged: Input");
-                    OnPropertyChanged(nameof(Input));
-                }
+                // it needs to flip, else it does not execute properly, so let's reset here
+                _isUsernameFocused = false;
+                OnPropertyChanged();
+                _isUsernameFocused = value;
+                OnPropertyChanged();
             }
         }
-        
-        public string Output
-        {
-            get
-            {
-                Debug.Print("read Output");
-                return _output;
-            }
-            set
-            {
-                Debug.Print("write Output");
-                if (_output != value)
-                {
-                    Debug.Print("set Output");
-                    _output = value;
-                    Debug.Print("fire propertyChanged: Output");
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public ICommand ExecuteCommand { get; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainViewModel()
         {
-            Debug.Print("ctor MainViewModel");
-            this.ExecuteCommand = new ExecuteCommand(this);
+            AddCommand = new RelayCommand((_) =>
+            {
+               // Data.Add(new HighscoreEntry(this.CurrentUsername, this.CurrentPoints));
+                CurrentUsername = string.Empty;
+                CurrentPoints = string.Empty;
+                OnPropertyChanged(nameof(CurrentUsername));
+                OnPropertyChanged("CurrentPoints");
+                IsUsernameFocused = true;
+            });
+            IsUsernameFocused = true;
+            AddTour = new RelayCommand((_) =>
+            {
+                
+            });
+            DeleteTour = new RelayCommand((_) =>
+            {
+               
+            });
+            ImportTour = new RelayCommand((_) =>
+            {
 
-            #region Simpler Solution
+            });
+            ExportTour = new RelayCommand((_) =>
+            {
 
-            // Alternative: https://docs.microsoft.com/en-us/archive/msdn-magazine/2009/february/patterns-wpf-apps-with-the-model-view-viewmodel-design-pattern#id0090030
-            // this.ExecuteCommand = new RelayCommand(() => Output = $"Hello {Input}!");
-
-            #endregion
+            });
         }
 
+
+        public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            Debug.Print($"propertyChanged \"{propertyName}\"");
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

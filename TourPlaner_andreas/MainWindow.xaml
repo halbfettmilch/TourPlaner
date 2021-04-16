@@ -3,12 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TourPlaner_andreas"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <local:MainViewModel />
-    </Window.DataContext>
     <DockPanel>
         <DockPanel DockPanel.Dock="TOP">
             <Menu DockPanel.Dock="Right">
@@ -35,7 +31,7 @@
             </Menu>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
-            <Button DockPanel.Dock="Right" Margin="5">Search</Button>
+            <Button DockPanel.Dock="Right" Margin="5" Command="{Binding SearchCommand}">Search</Button>
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5">Search</Label>
             <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Text=""/>
         </DockPanel>

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TourPlaner_andreas.DAL\TourPlaner_andreas.DAL.csproj" />
+    <ProjectReference Include="..\TourPlaner_andreas.Models\TourPlaner_andreas.Models.csproj" />
+  </ItemGroup>
+
+</Project>

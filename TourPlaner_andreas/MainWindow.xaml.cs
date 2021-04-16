@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TourPlaner_andreas.BL;
+using TourPlaner_andreas.ViewModels;
 
 namespace TourPlaner_andreas
 {
@@ -23,16 +25,8 @@ namespace TourPlaner_andreas
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new TourFolderVM(WpfAppManagerFactory.GetFactoryManager());
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
 }
