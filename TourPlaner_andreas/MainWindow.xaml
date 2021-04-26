@@ -33,7 +33,7 @@
         <DockPanel DockPanel.Dock="Top">
             <Button DockPanel.Dock="Right" Margin="5" Command="{Binding SearchCommand}">Search</Button>
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5">Search</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Text=""/>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Text="{Binding SearchName, Mode=TwoWay}"/>
         </DockPanel>
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
@@ -43,9 +43,12 @@
             </Grid.ColumnDefinitions>
             <DockPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Label DockPanel.Dock="Top" HorizontalAlignment="left" Margin="5">Tours</Label>
-                <ListBox DockPanel.Dock="Top" Margin="5">
-                    <ListBoxItem>Create a new tour...</ListBoxItem>
-                </ListBox>
+                <ListBox DockPanel.Dock="Top" Margin="5" 
+                         ItemsSource="{Binding Items}"
+                         SelectedItem="{Binding CurrentItem}"
+                         AlternationCount="2"
+                         
+                         />
             </DockPanel>
             <GridSplitter Grid.Column="1" Grid.Row="0" Background="#302f2d" ResizeDirection="Columns" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
             <DockPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -72,12 +75,11 @@
                     <GridSplitter Grid.Row="1" Background="#302f2d" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
                     <DataGrid Grid.Row="2">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Header="Sel"/>
-                            <DataGridTextColumn Header="Date/Time"/>
+                            <DataGridCheckBoxColumn Header="O"/>
+                            <DataGridTextColumn Header="ID"/>
+                            <DataGridTextColumn Header="Date"/>
+                            <DataGridTextColumn Header="Length"/>
                             <DataGridTextColumn Header="Duration"/>
-                            <DataGridTextColumn Header="Distance"/>
-                            <DataGridTextColumn Header="Rate"/>
-                            <DataGridTextColumn Header="Notes"/>
                         </DataGrid.Columns>
                         
                     </DataGrid>

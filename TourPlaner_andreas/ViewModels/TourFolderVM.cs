@@ -34,7 +34,7 @@ namespace TourPlaner_andreas.ViewModels {
             set {
                 if ((currentItem != value) && (value != null)) {
                     currentItem = value;
-                    RaisePropertyChangedEvent(nameof(CurrentItem));
+                    RaisePropertyChangedEvent(nameof(currentItem));
                 }
             }
         }

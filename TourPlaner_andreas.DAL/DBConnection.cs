@@ -1,21 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TourPlaner_andreas.Models;
+using Npgsql;
+using System.IO;
+using System.Diagnostics;
 
 namespace TourPlaner_andreas.DAL
 {
     class DbConnection : DataAccess
     {
-        private string connectionString;
-
+        //private string connectionString;
+        
+        
         public DbConnection()
-        {
-            // get connection string from config file
-            connectionString = "...";
+        {   //C:\Users\Andre\source\repos\TourPlaner_andreas\TourPlaner_andreas\bin\Debug\net5.0-windows\config.txt'
+            string path = "config.txt";
+            // get connection string from config file: @"Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=tourplaner"
+            string connectionString = File.ReadAllText(path);
+            Debug.WriteLine(connectionString);
             // establish connection to DB
+            using (NpgsqlConnection con = GetConnection(connectionString))
+            {
+                con.Open();
+                if (con.State == ConnectionState.Open)
+                {   Debug.WriteLine("connected to DB");
+                   
+                }
+                else Debug.WriteLine("Not connected to DB");
+                con.Close();
+            }
+        }
+
+        public void AddTourToList(TourItem item)
+        {
+            // add insert/update SQL statement/query here
         }
 
         public void AddLogToItem(TourItem item, TourLog logs)
@@ -33,6 +56,10 @@ namespace TourPlaner_andreas.DAL
                 new TourItem() { Name = "SWEI" },
                 new TourItem() { Name = "FHTW" }
             };
+        }
+        public static NpgsqlConnection GetConnection(string connectionString)
+        {
+            return new NpgsqlConnection(connectionString);
         }
     }
 }
