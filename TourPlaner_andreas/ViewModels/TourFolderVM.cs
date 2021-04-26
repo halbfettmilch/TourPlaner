@@ -8,7 +8,7 @@ using TourPlaner_andreas.Models;
 namespace TourPlaner_andreas.ViewModels {
     public class TourFolderVM : ViewModelBase {
 
-        private IWpfAppManager tourManager;
+        private ITourItem_Manager tourManager;
         private TourItem currentItem;
         private TourFolder folder;
         private string searchName;
@@ -39,7 +39,7 @@ namespace TourPlaner_andreas.ViewModels {
             }
         }
 
-        public TourFolderVM(IWpfAppManager tourManager) {
+        public TourFolderVM(ITourItem_Manager tourManager) {
             this.tourManager = tourManager;
             Items = new ObservableCollection<TourItem>();
             folder = tourManager.GetTourFolder("Get Tour Folder From Disk");

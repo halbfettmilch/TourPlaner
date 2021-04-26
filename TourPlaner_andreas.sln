@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlaner_andreas", "TourP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlaner_andreas_Tests", "TourPlaner_andreas_Tests\TourPlaner_andreas_Tests.csproj", "{53726219-62CA-4F05-A0CC-8147CD0C8DF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlaner_andreas.BL", "TourPlaner_andreas.BL\TourPlaner_andreas.BL.csproj", "{6F1A5E54-9DD5-420B-AFDA-3B3A1CD76696}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlaner_andreas.BL", "TourPlaner_andreas.BL\TourPlaner_andreas.BL.csproj", "{6F1A5E54-9DD5-420B-AFDA-3B3A1CD76696}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlaner_andreas.DAL", "TourPlaner_andreas.DAL\TourPlaner_andreas.DAL.csproj", "{27B8B3F9-1D0E-4F63-A271-2F9EFC8A126E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlaner_andreas.DAL", "TourPlaner_andreas.DAL\TourPlaner_andreas.DAL.csproj", "{27B8B3F9-1D0E-4F63-A271-2F9EFC8A126E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlaner_andreas.Models", "TourPlaner_andreas.Models\TourPlaner_andreas.Models.csproj", "{F1FD18B8-916A-455C-81F9-811C19C15543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlaner_andreas.Models", "TourPlaner_andreas.Models\TourPlaner_andreas.Models.csproj", "{F1FD18B8-916A-455C-81F9-811C19C15543}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlaner.DataAccessLayer.PostgresSqlServer", "TourPlaner.DataAccessLayer.PostgresSqlServer\TourPlaner.DataAccessLayer.PostgresSqlServer.csproj", "{2388A102-86BA-4F57-916B-B8BC07E559BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{F1FD18B8-916A-455C-81F9-811C19C15543}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1FD18B8-916A-455C-81F9-811C19C15543}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1FD18B8-916A-455C-81F9-811C19C15543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2388A102-86BA-4F57-916B-B8BC07E559BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2388A102-86BA-4F57-916B-B8BC07E559BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2388A102-86BA-4F57-916B-B8BC07E559BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2388A102-86BA-4F57-916B-B8BC07E559BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

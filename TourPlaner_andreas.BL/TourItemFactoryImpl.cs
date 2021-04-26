@@ -4,7 +4,7 @@ using TourPlaner_andreas.Models;
 using TourPlaner_andreas.DAL;
 
 namespace TourPlaner_andreas.BL {
-    internal class WpfAppManagerImpl : IWpfAppManager
+    internal class TourItemFactoryImpl : ITourItem_Manager
     {
 
         TourItemDAL tourItemDal = new TourItemDAL();
