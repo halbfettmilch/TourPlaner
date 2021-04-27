@@ -16,16 +16,18 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
     {
 
         private IDatabase database;
-        private ITourItemDAO tourItemDao;
+        private ITourItemDAO tourItemDAO;
         private const string SQL_FIND_BY_MEDIAITEMID = "SELECT * from  public.\"tourLogs\" WHERE \"Id\"=@Id;";
         private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tourLogs\" WHERE \"TourLogId\" =@TourLogId;";
         private const string SQL_INSERT_NEW_ITEMLOG = "INSERT INTO public.\"tourLogs\" (\"LogText\", \"TourItemId\") VALUES (@LogText,@TourItemId) RETURNING \"Id\";";
 
-        public TourLogPostgresDAO(IDatabase database, ITourItemDAO tourItemDao)
+        public TourLogPostgresDAO()
         {
-            this.database = database;
-            this.tourItemDao = tourItemDao;
+            this.database = DALFactory.GetDatabase();
+            this.tourItemDAO = DALFactory.createTourItemDAO();
         }
+
+       
 
         public TourLog AddNewItemLog(string logText, TourItem item)
 
@@ -48,7 +50,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         public IEnumerable<TourLog> GetLogsForTourItem(TourItem item)
         {
-            DbCommand getLogsCommand = database.createCommand(SQL_FIND_BY_MEDIAITEMID);
+            DbCommand getLogsCommand = database.createCommand(SQL_GET_ALL_ITEMS);
             database.DefineParameter(getLogsCommand, "@TourItemId", DbType.Int32, item.Id);
             return QueryTourLogsFromDb(getLogsCommand);
         }
@@ -63,7 +65,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
                     tourLogList.Add(new TourLog(
                         (int)reader["Id"],
                         (string)reader["LogText"],
-                       tourItemDao.FindById((int)reader["TourItemId"])
+                       tourItemDAO.FindById((int)reader["TourItemId"])
                     ));
                 }
             }

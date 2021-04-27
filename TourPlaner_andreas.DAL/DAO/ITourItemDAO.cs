@@ -9,8 +9,8 @@ namespace TourPlaner_andreas.DAL.DAO
     {
         TourItem FindById(int itemId);
 
-        TourItem AddNewItem(string name, string url, DateTime creationTime);
+        TourItem AddNewItem(string name, string url,string annotaition, DateTime creationTime);
 
-        IEnumerable<TourItem> GetItems();
+        IEnumerable<TourItem> GetItems(TourFolder folder);
     }
 }

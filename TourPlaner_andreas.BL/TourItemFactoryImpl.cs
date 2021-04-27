@@ -1,17 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TourPlaner_andreas.Models;
 using TourPlaner_andreas.DAL;
+using TourPlaner_andreas.DAL.common;
+using TourPlaner_andreas.DAL.DAO;
 
 namespace TourPlaner_andreas.BL {
     internal class TourItemFactoryImpl : ITourItem_Manager
     {
 
-        TourItemDAL tourItemDal = new TourItemDAL();
+      
 
         public IEnumerable<TourItem> GetItems(TourFolder folder)
         {
-            return tourItemDal.GetItems(folder);
+            ITourItemDAO tourItemDAO = DALFactory.createTourItemDAO();
+            return tourItemDAO.GetItems(folder);
         }
 
         public TourFolder GetTourFolder(string url)
@@ -31,9 +35,16 @@ namespace TourPlaner_andreas.BL {
             return items.Where(x => x.Name.ToLower().Contains(itemName.ToLower()));
         }
 
-        public void CreateLogs(TourItem item, TourLog logs)
+        public TourLog CreateItemLog(string logText, TourItem item)
         {
-            tourItemDal.AddLogToTour(item, logs);
+            ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
+            return tourLogDAO.AddNewItemLog(logText, item);
+        }
+
+        public TourItem CreateItem(string name, string annotation, string url, DateTime creationDate)
+        {
+            ITourItemDAO tourItemDAO = DALFactory.createTourItemDAO();
+            return tourItemDAO.AddNewItem(name, annotation, url, creationDate);
         }
     }
 }

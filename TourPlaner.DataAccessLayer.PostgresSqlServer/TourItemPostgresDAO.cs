@@ -18,16 +18,20 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tours\";";
         private const string SQL_INSERT_NEW_ITEM = "INSERT INTO public.\"tours\" (\"Name\", \"url\", \"CreationTime\") VALUES (@Name,@url,@CreationTime) RETURNING \"Id\";" ;
 
-        public TourItemPostgresDAO(IDatabase database)
+        public TourItemPostgresDAO()
         {
-            this.database = database;
+            this.database = DALFactory.GetDatabase();
+           
         }
 
-        public TourItem AddNewItem(string name, string url, DateTime creationTime)
+        
+
+        public TourItem AddNewItem(string name, string url,string annotation, DateTime creationTime)
         {
             DbCommand insertCommand = database.createCommand(SQL_INSERT_NEW_ITEM);
             database.DefineParameter(insertCommand, "@Name",DbType.String, name);
             database.DefineParameter(insertCommand, "@Url", DbType.String, name);
+            database.DefineParameter(insertCommand, "@Annotation", DbType.String, annotation);
             database.DefineParameter(insertCommand, "@CreationTime", DbType.String, creationTime.ToString());
             return FindById(database.ExecuteScalar(insertCommand));
         }
@@ -41,7 +45,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         }
 
-        public IEnumerable<TourItem> GetItems()
+        public IEnumerable<TourItem> GetItems(TourFolder folder)
         {
             DbCommand itemsCommand = database.createCommand(SQL_GET_ALL_ITEMS);
             
