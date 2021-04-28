@@ -34,7 +34,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         {
             DbCommand insertCommand = database.createCommand(SQL_INSERT_NEW_ITEMLOG);
             database.DefineParameter(insertCommand, "@LogText", DbType.String, logText);
-            database.DefineParameter(insertCommand, "@TourItemId", DbType.Int32, item.Id);
+            database.DefineParameter(insertCommand, "@TourItemId", DbType.Int32, item.TourID);
             return FindById(database.ExecuteScalar(insertCommand));
 
 
@@ -51,7 +51,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         public IEnumerable<TourLog> GetLogsForTourItem(TourItem item)
         {
             DbCommand getLogsCommand = database.createCommand(SQL_GET_ALL_ITEMS);
-            database.DefineParameter(getLogsCommand, "@TourItemId", DbType.Int32, item.Id);
+            database.DefineParameter(getLogsCommand, "@TourItemId", DbType.Int32, item.TourID);
             return QueryTourLogsFromDb(getLogsCommand);
         }
 

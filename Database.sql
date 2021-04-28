@@ -1,27 +1,28 @@
 -- Drop the Database
 
 DROP TABLE tours CASCADE;
+DROP TABLE logs CASCADE;
 
 --Creating Tables
 
 Create TABLE IF NOT EXISTS tours(
 TourID INT,
-TourDate DATE,
+Name TEXT,
+Url TEXT,
+CreationTime DATE,
 TourLength INT,
-DurationTIME,
-TourOwner TEXT,
-TourPic INT
+Duration INT
+
 );
 
 Create Table IF NOT EXISTS logs(
-tourID INT,
+logID INT,
 logText TEXT,
-
+tourItemId INT
 );
 
 
 
 --Insert statments for testing
 
-Insert into users(userID,username,userpassword) values(2,'kienboeck','password');
-Insert into tours(tourID,TourDate,TourLength,Duration,TourOwner,TourPic) values ('1','2013-06-01','50','00:00:00','2','123321');
+Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration) values ('1','"tour im Prater"','"empty"','2013-06-01','50','33');

@@ -10,13 +10,13 @@ namespace TourPlaner_andreas.Models
     {
         public int Id { get; set; }
         public string LogText { get; set; }
-        public TourItem LogMediaItem { get; set; }
+        public TourItem LogTourItem { get; set; }
 
         public TourLog(int id, string logText, TourItem loggedItem)
         {
             this.Id = id;
             this.LogText = logText;
-            this.LogMediaItem = loggedItem;
+            this.LogTourItem = loggedItem;
         }
     }
 }

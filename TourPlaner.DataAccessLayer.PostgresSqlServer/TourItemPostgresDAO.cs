@@ -14,9 +14,9 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
     public class TourItemPostgresDAO : ITourItemDAO
     {
         private IDatabase database;
-        private const string SQL_FIND_BY_ID = "SELECT * from  public.\"tours\" WHERE \"Id\"=@Id;";
+        private const string SQL_FIND_BY_ID = "SELECT * from  public.\"tours\" WHERE \"TourID\"=@TourID;";
         private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tours\";";
-        private const string SQL_INSERT_NEW_ITEM = "INSERT INTO public.\"tours\" (\"Name\", \"url\", \"CreationTime\") VALUES (@Name,@url,@CreationTime) RETURNING \"Id\";" ;
+        private const string SQL_INSERT_NEW_ITEM = "INSERT INTO public.\"tours\" (\"Name\", \"url\", \"CreationTime\") VALUES (@Name,@url,@CreationTime) RETURNING \"TourID\";" ; // need further work
 
         public TourItemPostgresDAO()
         {
@@ -24,7 +24,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
            
         }
 
-        
+        //needs further work
 
         public TourItem AddNewItem(string name, string url,string annotation, DateTime creationTime)
         {
@@ -60,10 +60,13 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
                 while (reader.Read())
                 {
                     tourItemList.Add(new TourItem(
-                        (int)reader["Id"],
+                        (int)reader["TourID"],
                         (string)reader["Name"],
                         (string)reader["Url"],
-                        DateTime.Parse(reader["CreationTime"].ToString())
+                        DateTime.Parse(reader["CreationTime"].ToString()),
+                        (int)reader["TourLength"],
+                        (int)reader["Duration"]
+                      
                         ));
                 }
             }
