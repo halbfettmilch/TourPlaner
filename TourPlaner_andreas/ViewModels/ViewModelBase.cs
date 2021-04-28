@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-
+//Property Changed Command wird erstellt um zu Prüfuen ob sich etwas bei der Ansicht verändert hat (bsp Suchtext muss neu reingeladen werden)
 namespace TourPlaner_andreas.ViewModels {
     public abstract class ViewModelBase : INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged;

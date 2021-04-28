@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TourPlaner_andreas.Models;
 
-//DAO = DataAccessModel
+//DAO = DataAccessObject
 namespace TourPlaner_andreas.DAL.DAO
 {
     public interface ITourItemDAO

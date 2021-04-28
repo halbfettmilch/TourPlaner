@@ -4,19 +4,19 @@ using System.Windows.Input;
 using TourPlaner_andreas.ViewModels;
 using TourPlaner_andreas.BL;
 using TourPlaner_andreas.Models;
-
+//enthält die Funktionen die ein Binding auf das MainWindow haben
 namespace TourPlaner_andreas.ViewModels {
     public class TourFolderVM : ViewModelBase {
 
-        private ITourItem_Manager tourManager;
+        private AppManager tourManager;
         private TourItem currentItem;
         private TourFolder folder;
         private string searchName;
 
         public ICommand SearchCommand { get; set; }
-
         public ICommand ClearCommand { get; set; }
-
+        public ICommand AddTourCommand { get; set; }
+        public ICommand DelTourCommand { get; set; }
         public ObservableCollection<TourItem> Items { get; set; }
 
         public string SearchName {
@@ -39,7 +39,7 @@ namespace TourPlaner_andreas.ViewModels {
             }
         }
 
-        public TourFolderVM(ITourItem_Manager tourManager) {
+        public TourFolderVM(AppManager tourManager) {
             this.tourManager = tourManager;
             Items = new ObservableCollection<TourItem>();
             folder = tourManager.GetTourFolder("Get Tour Folder From Disk");
@@ -51,13 +51,24 @@ namespace TourPlaner_andreas.ViewModels {
                     Items.Add(item);
                 }
             });
-
+            //wird nicht verwendet
             this.ClearCommand = new RelayCommand(o => {
                 Items.Clear();
                 SearchName = "";
 
                 FillListView();
             });
+
+            this.AddTourCommand = new RelayCommand(o =>
+            {
+                //add tour implementation
+            });
+
+            this.DelTourCommand = new RelayCommand(o =>
+            {
+                //Del tour implementation
+            });
+
 
             InitListView();
         }
@@ -73,5 +84,11 @@ namespace TourPlaner_andreas.ViewModels {
                 Items.Add(item);
             }
         }
+
+       
+       
+
+       
+      
     }
 }

@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TourPlaner.DataAccessLayer.PostgresSqlServer\TourPlaner_andreas.DataAccessLayer.PostgresSqlServer.csproj" />
     <ProjectReference Include="..\TourPlaner_andreas.DAL\TourPlaner_andreas.DAL.csproj" />
     <ProjectReference Include="..\TourPlaner_andreas.Models\TourPlaner_andreas.Models.csproj" />
   </ItemGroup>

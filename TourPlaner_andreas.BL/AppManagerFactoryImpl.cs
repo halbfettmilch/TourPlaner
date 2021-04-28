@@ -7,7 +7,7 @@ using TourPlaner_andreas.DAL.common;
 using TourPlaner_andreas.DAL.DAO;
 
 namespace TourPlaner_andreas.BL {
-    internal class TourItemFactoryImpl : ITourItem_Manager
+    internal class AppManagerFactoryImpl : AppManager
     {
 
       
