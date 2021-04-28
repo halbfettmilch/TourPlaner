@@ -50,20 +50,19 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         public IDataReader ExecuteReader(DbCommand command)
         {
-            using (DbConnection connection = CreateConnection())
-            {   
-                command.Connection = connection;
+              
+                command.Connection = CreateConnection();
                 return command.ExecuteReader(CommandBehavior.CloseConnection);
-            }
+            
         }
 
         public int ExecuteScalar(DbCommand command)
         {
-            using (DbConnection connection= CreateConnection())
-            {
-                command.Connection = connection;
+            
+            
+                command.Connection = CreateConnection();
                 return  Convert.ToInt32(command.ExecuteScalar());
-            }
+            
         }
 
         private DbConnection CreateConnection()

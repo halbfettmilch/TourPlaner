@@ -13,6 +13,12 @@ TourOwner TEXT,
 TourPic INT
 );
 
+Create Table IF NOT EXISTS logs(
+tourID INT,
+logText TEXT,
+
+);
+
 
 
 --Insert statments for testing

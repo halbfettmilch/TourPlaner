@@ -17,8 +17,8 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         private IDatabase database;
         private ITourItemDAO tourItemDAO;
-        private const string SQL_FIND_BY_MEDIAITEMID = "SELECT * from  public.\"tourLogs\" WHERE \"Id\"=@Id;";
-        private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tourLogs\" WHERE \"TourLogId\" =@TourLogId;";
+        private const string SQL_FIND_BY_MEDIAITEMID = "SELECT * from  public.\"logs\" WHERE \"Id\"=@Id;";
+        private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tourLogs\" WHERE \"tourID\" =@TourLogId;";
         private const string SQL_INSERT_NEW_ITEMLOG = "INSERT INTO public.\"tourLogs\" (\"LogText\", \"TourItemId\") VALUES (@LogText,@TourItemId) RETURNING \"Id\";";
 
         public TourLogPostgresDAO()

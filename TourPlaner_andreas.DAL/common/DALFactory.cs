@@ -44,6 +44,12 @@ namespace TourPlaner_andreas.DAL.common
             return Activator.CreateInstance(dbClass, new object[] {connectionString}) as IDatabase;
         }
 
+        public static ITourLogDAO createTourLogDAO()
+        {
+            string className = assamblyName + ".TourLogPostgresDAO";
+            Type tourLogType = dalAssambly.GetType(className);
+            return Activator.CreateInstance(tourLogType) as ITourLogDAO;
+        }
 
         public static ITourItemDAO createTourItemDAO()
         {
@@ -52,12 +58,7 @@ namespace TourPlaner_andreas.DAL.common
             return Activator.CreateInstance(touritemType) as ITourItemDAO;
         }
 
-        public static ITourLogDAO createTourLogDAO()
-        {
-            string className = assamblyName + ".TourLogPostgresDAO";
-            Type tourLogType = dalAssambly.GetType(className);
-            return Activator.CreateInstance(tourLogType) as ITourLogDAO;
-        }
+        
 
     }
 }

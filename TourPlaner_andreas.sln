@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlaner_andreas.DAL", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlaner_andreas.Models", "TourPlaner_andreas.Models\TourPlaner_andreas.Models.csproj", "{F1FD18B8-916A-455C-81F9-811C19C15543}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlaner_andreas.DataAccessLayer.PostgresSqlServer", "TourPlaner.DataAccessLayer.PostgresSqlServer\TourPlaner_andreas.DataAccessLayer.PostgresSqlServer.csproj", "{2388A102-86BA-4F57-916B-B8BC07E559BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlaner.DataAccessLayer.PostgresSqlServer", "TourPlaner.DataAccessLayer.PostgresSqlServer\TourPlaner.DataAccessLayer.PostgresSqlServer.csproj", "{2388A102-86BA-4F57-916B-B8BC07E559BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
