@@ -8,6 +8,6 @@ namespace TourPlaner_andreas.BL {
         IEnumerable<TourItem> GetItems(TourFolder folder);
         IEnumerable<TourItem> SearchForItems(string itemName, TourFolder folder, bool caseSensitive = false);
         TourLog CreateItemLog(string logText, TourItem item);
-        TourItem CreateItem(string name, string annotation, string url, DateTime creationDate);
+        TourItem CreateItem(int tourId, string name, string url, DateTime creationTime, int tourLength, int duration);
     }
 }

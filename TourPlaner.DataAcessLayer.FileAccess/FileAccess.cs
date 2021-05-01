@@ -33,7 +33,7 @@ namespace TourPlaner.DataAcessLayer.FileAccess
             return Path.GetFullPath(filePath,fileName);
 
         }
-        public int CreateNewTourItemFile(string name, string url, DateTime creationTime)
+        public int CreateNewTourItemFile(int tourId, string name, string url, DateTime creationTime, int tourLength, int duration)
         {
             int id = Guid.NewGuid().GetHashCode();
             string fileName = id + "_TourITem.txt";
@@ -41,10 +41,12 @@ namespace TourPlaner.DataAcessLayer.FileAccess
 
             using (StreamWriter writer = File.CreateText(path))
             {
-                writer.WriteLine(id);  
+                writer.WriteLine(tourId);  
                 writer.WriteLine(name); 
                 writer.WriteLine(url);
                 writer.WriteLine(creationTime);
+                writer.WriteLine(tourLength);
+                writer.WriteLine(duration);
             }
 
             return id;
@@ -91,7 +93,7 @@ namespace TourPlaner.DataAcessLayer.FileAccess
                 StringBuilder sb = new StringBuilder();
                 while (!reader.EndOfStream)
                 {
-                    sb.Append(reader);
+                    sb.Append(reader); // wenn fehler hier auftaucht: Video anschauen
                 }
 
                 return sb.ToString();

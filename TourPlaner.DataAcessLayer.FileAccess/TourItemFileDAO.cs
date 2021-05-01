@@ -20,9 +20,9 @@ namespace TourPlaner.DataAcessLayer.FileAccess
             this.fileAccess = DALFactory.GetFileAccess();
         }
 
-        public TourItem AddNewItem(string name, string url, string annotaition, DateTime creationTime)
+        public TourItem AddNewItem(int tourId, string name, string url, DateTime creationTime, int tourLength, int duration)
         {
-            int id = fileAccess.CreateNewTourItemFile(name, url, creationTime);
+            int id = fileAccess.CreateNewTourItemFile(tourId,name,url,creationTime,tourLength,duration);
             return FindById(id);
         }
 

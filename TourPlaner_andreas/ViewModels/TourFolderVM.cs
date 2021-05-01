@@ -44,8 +44,10 @@ namespace TourPlaner_andreas.ViewModels {
             Items = new ObservableCollection<TourItem>();
             folder = tourManager.GetTourFolder("Get Tour Folder From Disk");
 
-            this.SearchCommand = new RelayCommand(o => {
-                IEnumerable<TourItem> items = tourManager.SearchForItems(SearchName, folder);
+            this.SearchCommand = new RelayCommand(o =>
+            {
+                string searchTerm = SearchName ?? string.Empty;
+                IEnumerable<TourItem> items = tourManager.SearchForItems(searchTerm, folder);
                 Items.Clear();
                 foreach (TourItem item in items) {
                     Items.Add(item);

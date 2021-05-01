@@ -16,7 +16,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         private IDatabase database;
         private const string SQL_FIND_BY_ID = "SELECT * from  public.\"tours\" WHERE \"TourID\"=@TourID;";
         private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tours\";";
-        private const string SQL_INSERT_NEW_ITEM = "INSERT INTO public.\"tours\" (\"Name\", \"url\", \"CreationTime\") VALUES (@Name,@url,@CreationTime) RETURNING \"TourID\";" ; // need further work
+        private const string SQL_INSERT_NEW_ITEM = "INSERT INTO public.\"tours\" (\"tourid\", \"name\", \"url\",\"creationTime\",\"tourLength\",\"duration\") VALUES (@TourId,@name,@url,@CreationTime,@TourLength,@Duration) RETURNING \"TourID\";"; // need further work
 
         public TourItemPostgresDAO()
         {
@@ -26,13 +26,15 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         //needs further work
 
-        public TourItem AddNewItem(string name, string url,string annotation, DateTime creationTime)
+        public TourItem AddNewItem(int tourId,string name, string url, DateTime creationTime, int tourLength, int duration)
         {
             DbCommand insertCommand = database.createCommand(SQL_INSERT_NEW_ITEM);
-            database.DefineParameter(insertCommand, "@Name",DbType.String, name);
-            database.DefineParameter(insertCommand, "@Url", DbType.String, name);
-            database.DefineParameter(insertCommand, "@Annotation", DbType.String, annotation);
-            database.DefineParameter(insertCommand, "@CreationTime", DbType.String, creationTime.ToString());
+            database.DefineParameter(insertCommand, "@TourId",DbType.Int32, tourId);
+            database.DefineParameter(insertCommand, "@Name", DbType.String, name);
+            database.DefineParameter(insertCommand, "@Url", DbType.String, url);
+            database.DefineParameter(insertCommand, "@CreationTime", DbType.Date, creationTime);
+            database.DefineParameter(insertCommand, "@TourLength", DbType.Int32, tourLength);
+            database.DefineParameter(insertCommand, "@Duration", DbType.Int32, duration);
             return FindById(database.ExecuteScalar(insertCommand));
         }
 

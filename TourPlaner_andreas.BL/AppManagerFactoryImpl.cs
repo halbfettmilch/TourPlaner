@@ -41,10 +41,10 @@ namespace TourPlaner_andreas.BL {
             return tourLogDAO.AddNewItemLog(logText, item);
         }
 
-        public TourItem CreateItem(string name, string annotation, string url, DateTime creationDate)
+        public TourItem CreateItem(int tourId, string name, string url, DateTime creationTime, int tourLength, int duration)
         {
             ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
-            return tourItemDAO.AddNewItem(name, annotation, url, creationDate);
+            return tourItemDAO.AddNewItem(tourId,name, url, creationTime, tourLength,duration);
         }
     }
 }

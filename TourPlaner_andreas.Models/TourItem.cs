@@ -15,13 +15,13 @@ namespace TourPlaner_andreas.Models
        
        
 
-        public TourItem(int id, string name, string url, DateTime creationtime, int tourlength, int duration)
+        public TourItem(int id, string name, string url, DateTime creationTime, int tourLength, int duration)
         {
             this.TourID = id;
             this.Name = name;
             this.Url = url;
-            this.CreationTime = creationtime;
-            this.TourLength = tourlength;
+            this.CreationTime = creationTime;
+            this.TourLength = tourLength;
             this.Duration = duration;
         }
     }
