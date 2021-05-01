@@ -14,7 +14,7 @@ namespace TourPlaner_andreas.BL {
 
         public IEnumerable<TourItem> GetItems(TourFolder folder)
         {
-            ITourItemDAO tourItemDAO = DALFactory.createTourItemDAO();
+            ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
             return tourItemDAO.GetItems(folder);
         }
 
@@ -37,13 +37,13 @@ namespace TourPlaner_andreas.BL {
 
         public TourLog CreateItemLog(string logText, TourItem item)
         {
-            ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
+            ITourLogDAO tourLogDAO = DALFactory.CreateTourLogDAO();
             return tourLogDAO.AddNewItemLog(logText, item);
         }
 
         public TourItem CreateItem(string name, string annotation, string url, DateTime creationDate)
         {
-            ITourItemDAO tourItemDAO = DALFactory.createTourItemDAO();
+            ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
             return tourItemDAO.AddNewItem(name, annotation, url, creationDate);
         }
     }

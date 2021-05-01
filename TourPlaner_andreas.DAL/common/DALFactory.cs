@@ -11,14 +11,20 @@ namespace TourPlaner_andreas.DAL.common
 {
     public class DALFactory
     {
-        private static string assamblyName;
-        private static Assembly dalAssambly;
+        private static string AssemblyName;
+        private static Assembly dalAssembly;
         private static IDatabase database;
+        private static IFileAccess fileAccess;
+        private static bool useFileSystem;
 
         static DALFactory()
-        {
-            assamblyName = ConfigurationManager.AppSettings["DALSqlAssambly"];
-            dalAssambly = Assembly.Load(assamblyName);
+        {   useFileSystem =bool.Parse(ConfigurationManager.AppSettings["useFileSystem"]);
+            AssemblyName = ConfigurationManager.AppSettings["DALSqlAssembly"];
+            if (useFileSystem)
+            {
+                AssemblyName = ConfigurationManager.AppSettings["DALFileAssembly"];
+            }
+            dalAssembly = Assembly.Load(AssemblyName);
         }
 
         public static IDatabase GetDatabase()
@@ -39,26 +45,62 @@ namespace TourPlaner_andreas.DAL.common
 
         private static IDatabase CreateDatabase(string connectionString)
         {
-            string databaseClassName = assamblyName + ".Database";
-            Type dbClass = dalAssambly.GetType(databaseClassName);
+            string databaseClassName = AssemblyName + ".Database";
+            Type dbClass = dalAssembly.GetType(databaseClassName);
             return Activator.CreateInstance(dbClass, new object[] {connectionString}) as IDatabase;
         }
 
-        public static ITourLogDAO createTourLogDAO()
+        public static IFileAccess GetFileAccess()
         {
-            string className = assamblyName + ".TourLogPostgresDAO";
-            Type tourLogType = dalAssambly.GetType(className);
-            return Activator.CreateInstance(tourLogType) as ITourLogDAO;
+            if (fileAccess == null)
+            {
+                fileAccess = CreateFileAccess();
+            }
+
+            return fileAccess;
         }
 
-        public static ITourItemDAO createTourItemDAO()
+        private static IFileAccess CreateFileAccess()
         {
-            string className = assamblyName + ".TourItemPostgresDAO";
-            Type touritemType = dalAssambly.GetType(className);
-            return Activator.CreateInstance(touritemType) as ITourItemDAO;
+            string startFolder = ConfigurationManager.ConnectionStrings["StartFolderFilePath"].ConnectionString;
+            return CreateFileAccess(startFolder);
         }
 
-        
+        private static IFileAccess CreateFileAccess(string startFolder)
+        {
+            string databaseClassName = AssemblyName + ".FileAccess";
+            Type dbClass = dalAssembly.GetType(databaseClassName);
+
+            return Activator.CreateInstance(dbClass,
+                new object[] { startFolder }) as IFileAccess;
+        }
+        // create tour item sql/file dao object
+        public static ITourItemDAO CreateTourItemDAO()
+        {
+            string className = AssemblyName + ".TourItemPostgresDAO";
+            if (useFileSystem)
+            {
+                className = AssemblyName + ".TourItemFileDAO";
+            }
+
+            Type zoneType = dalAssembly.GetType(className);
+            return Activator.CreateInstance(zoneType) as ITourItemDAO;
+        }
+
+        // create tour log sql/file dao object
+        public static ITourLogDAO CreateTourLogDAO()
+        {
+            string className = AssemblyName + ".TourLogPostgresDAO";
+            if (useFileSystem)
+            {
+                className = AssemblyName + ".TourLogFileDAO";
+            }
+
+            Type zoneType = dalAssembly.GetType(className);
+            return Activator.CreateInstance(zoneType) as ITourLogDAO;
+        }
+
+
 
     }
 }

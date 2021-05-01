@@ -24,7 +24,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         public TourLogPostgresDAO()
         {
             this.database = DALFactory.GetDatabase();
-            this.tourItemDAO = DALFactory.createTourItemDAO();
+            this.tourItemDAO = DALFactory.CreateTourItemDAO();
         }
 
        
