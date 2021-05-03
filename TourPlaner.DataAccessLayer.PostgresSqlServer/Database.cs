@@ -8,6 +8,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 {
     public class Database : IDatabase
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private string connectionString;
 
         public Database(string connectionString)
@@ -28,6 +29,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
                 return Index;
             }
 
+            log.Error("Parameter " + name +" already exists.");
             throw new ArgumentException(string.Format("Parameter {0} already exists.", name)); // TIPP Units test ob dieese Exception wirklich geworfen wird!
         }
 

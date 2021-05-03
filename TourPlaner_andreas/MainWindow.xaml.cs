@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using TourPlaner_andreas.BL;
 using TourPlaner_andreas.ViewModels;
 
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
+
 namespace TourPlaner_andreas
 {
     /// <summary>
@@ -30,3 +32,4 @@ namespace TourPlaner_andreas
 
     }
 }
+
