@@ -33,8 +33,8 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         {
             DbCommand insertCommand = database.createCommand(SQL_INSERT_NEW_ITEMLOG);
-            database.DefineParameter(insertCommand, "@LogText", DbType.String, logText);
-            database.DefineParameter(insertCommand, "@TourItemId", DbType.Int32, item.TourID);
+            database.DefineParameter(insertCommand, "@logtext", DbType.String, logText);
+            database.DefineParameter(insertCommand, "@tourid", DbType.Int32, item.TourID);
             return FindById(database.ExecuteScalar(insertCommand));
 
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TourPlaner_andreas.ViewModels;
@@ -60,15 +61,16 @@ namespace TourPlaner_andreas.ViewModels {
 
                 FillListView();
             });
-
+            
             this.AddTourCommand = new RelayCommand(o =>
             {
-                //add tour implementation
+                TourItem genItem = tourManager.CreateItem(1, "testTour", "C:/keinfolder", DateTime.Now , 1, 1);
+                Items.Add(genItem);
             });
 
             this.DelTourCommand = new RelayCommand(o =>
             {
-                //Del tour implementation
+               
             });
 
 

@@ -6,19 +6,19 @@ DROP TABLE logs CASCADE;
 --Creating Tables
 
 Create TABLE IF NOT EXISTS tours(
-TourID INT,
-Name TEXT,
-Url TEXT,
-CreationTime DATE,
-TourLength INT,
-Duration INT
+tourid INT,
+name TEXT,
+url TEXT,
+creationtime DATE,
+tourlength INT,
+duration INT
 
 );
 
 Create Table IF NOT EXISTS logs(
-logID INT,
-logText TEXT,
-tourItemId INT
+logid INT,
+logtext TEXT,
+touritemid INT
 );
 
 

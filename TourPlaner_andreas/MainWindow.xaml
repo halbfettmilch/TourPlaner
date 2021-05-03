@@ -13,21 +13,11 @@
                     <MenuItem Header="_About Tour Planer"/>
                 </MenuItem>
             </Menu>
+
             <Menu DockPanel.Dock="Left">
-<MenuItem Header ="_Tour">
-    <MenuItem Header="Create"/>
-    <MenuItem Header="_Delete"/>
-    <Separator/>
-    <MenuItem Header="_Import"/>
-    <MenuItem Header="_Export"/>
-    <Separator/>
-    <MenuItem Header="_Quit"/>
-</MenuItem>
-                <MenuItem Header="_Edit">
-                    <MenuItem Header="_Duplicate"/>
-                </MenuItem>
                 <MenuItem Header="_Options">
-                    <MenuItem Header="_Properties"/>
+                    <MenuItem Header="App Settings"/>
+                    <MenuItem Header="User Settings"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
@@ -45,16 +35,24 @@
             <DockPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <DockPanel DockPanel.Dock="Top">
                     <Label DockPanel.Dock="left" HorizontalAlignment="left" Margin="5">Tours</Label>
-                    <Button DockPanel.Dock="right" HorizontalAlignment="right" Margin="5" Command="{Binding AddTourCommand}">ADD</Button>
-                    <Button DockPanel.Dock="right" HorizontalAlignment="right" Margin="5" Command="{Binding DelTourCommand}">DEL</Button>
+                    <Menu DockPanel.Dock="Right">
+                        <MenuItem Header="Export" HorizontalAlignment="Right" Margin="5">
+                            <MenuItem Header=".txt File"/>
+                            <MenuItem Header="Report"/>
+                        </MenuItem>
+                    </Menu>
+                    <Button DockPanel.Dock="right" HorizontalAlignment="right" Margin="5" Command="{Binding DelTourCommand}">Import</Button>
+                    <Button DockPanel.Dock="right" HorizontalAlignment="right" Margin="5" Command="{Binding DelTourCommand}">Delete</Button>
+                    <Button DockPanel.Dock="right" HorizontalAlignment="right" Margin="5" Command="{Binding AddTourCommand}">Create</Button>
                 </DockPanel>
 
                 <ListBox DockPanel.Dock="Top" Margin="5" 
                          ItemsSource="{Binding Items}"
                          SelectedItem="{Binding CurrentItem}"
                          AlternationCount="2"
-                         
-                />
+                         DisplayMemberPath="Name"
+
+/>
             </DockPanel>
             <GridSplitter Grid.Column="1" Grid.Row="0" Background="#302f2d" ResizeDirection="Columns" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
             <DockPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -71,20 +69,29 @@
                         </TabItem>
                        <TabItem Header="Description">
                             <DockPanel>
-                                <Label DockPanel.Dock="Top">Title:</Label>
-                           <TextBox DockPanel.Dock="Top">enter Title here...</TextBox>
-                           <Label DockPanel.Dock="Top">Description:</Label>
-                           <TextBox DockPanel.Dock="Top">enter Description here...</TextBox>
+                                <DataGrid DockPanel.Dock="Top">
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn Header="ID"/>
+                                    <DataGridTextColumn Header="Name"/>
+                                    <DataGridTextColumn Header="CreationTime"/>
+                                    <DataGridTextColumn Header="Length"/>
+                                    <DataGridTextColumn Header="Expected duration"/>
+                                </DataGrid.Columns>
+                                </DataGrid>
+                                <Label DockPanel.Dock="Top">Tour Description</Label>
+                           <TextBox DockPanel.Dock="Top">enter Text here...</TextBox>
                             </DockPanel>
                         </TabItem>
                     </TabControl>
                     <GridSplitter Grid.Row="1" Background="#302f2d" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
                     <DataGrid Grid.Row="2">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Header="O"/>
-                            <DataGridTextColumn Header="ID"/>
+                           
                             <DataGridTextColumn Header="Date"/>
-                            <DataGridTextColumn Header="Length"/>
+                            <DataGridTextColumn Header="max velocity"/>
+                            <DataGridTextColumn Header="min velocity"/>
+                            <DataGridTextColumn Header="av. velocity"/>
+                            <DataGridTextColumn Header="Calories burnt"/>
                             <DataGridTextColumn Header="Duration"/>
                         </DataGrid.Columns>
                         
