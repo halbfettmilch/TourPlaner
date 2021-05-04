@@ -38,7 +38,7 @@
                     <Menu DockPanel.Dock="Right">
                         <MenuItem Header="Export" HorizontalAlignment="Right" Margin="5">
                             <MenuItem Header=".txt File"/>
-                            <MenuItem Header="Report"/>
+                            <MenuItem Header="Report" Command="{Binding PrintPdf}"/>
                         </MenuItem>
                     </Menu>
                     <Button DockPanel.Dock="right" HorizontalAlignment="right" Margin="5" Command="{Binding DelTourCommand}">Import</Button>
@@ -69,13 +69,13 @@
                         </TabItem>
                        <TabItem Header="Description">
                             <DockPanel>
-                                <DataGrid DockPanel.Dock="Top">
+                                <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding CurrentItem}">
                                 <DataGrid.Columns >
-                                    <DataGridTextColumn Header="ID"/>
-                                    <DataGridTextColumn Header="Name"/>
-                                    <DataGridTextColumn Header="CreationTime"/>
-                                    <DataGridTextColumn Header="Length"/>
-                                    <DataGridTextColumn Header="Expected duration"/>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding TourID}"/>
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                        <DataGridTextColumn Header="CreationTime" Binding="{Binding CreationTime}"/>
+                                        <DataGridTextColumn Header="Length" Binding="{Binding TourLength}"/>
+                                        <DataGridTextColumn Header="Expected duration" Binding="{Binding Duration}"/>
                                 </DataGrid.Columns>
                                 </DataGrid>
                                 <Label DockPanel.Dock="Top">Tour Description</Label>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using TourPlaner_andreas.ViewModels;
 using TourPlaner_andreas.BL;
@@ -9,7 +10,7 @@ using TourPlaner_andreas.Models;
 namespace TourPlaner_andreas.ViewModels {
     public class TourFolderVM : ViewModelBase {
 
-        private AppManager tourManager;
+        private IAppManager tourManager;
         private TourItem currentItem;
         private TourFolder folder;
         private string searchName;
@@ -18,6 +19,7 @@ namespace TourPlaner_andreas.ViewModels {
         public ICommand ClearCommand { get; set; }
         public ICommand AddTourCommand { get; set; }
         public ICommand DelTourCommand { get; set; }
+        public ICommand PrintPdf { get; set; }
         public ObservableCollection<TourItem> Items { get; set; }
 
         public string SearchName {
@@ -35,12 +37,13 @@ namespace TourPlaner_andreas.ViewModels {
             set {
                 if ((currentItem != value) && (value != null)) {
                     currentItem = value;
-                    RaisePropertyChangedEvent(nameof(currentItem));
+                    RaisePropertyChangedEvent(nameof(CurrentItem));
+                    
                 }
             }
         }
 
-        public TourFolderVM(AppManager tourManager) {
+        public TourFolderVM(IAppManager tourManager) {
             this.tourManager = tourManager;
             Items = new ObservableCollection<TourItem>();
             folder = tourManager.GetTourFolder("Get Tour Folder From Disk");
@@ -61,7 +64,11 @@ namespace TourPlaner_andreas.ViewModels {
 
                 FillListView();
             });
-            
+            this.PrintPdf = new RelayCommand(o => {
+               tourManager.CreatePdf(tourManager.GetItems(folder));
+               
+            });
+
             this.AddTourCommand = new RelayCommand(o =>
             {
                 TourItem genItem = tourManager.CreateItem(1, "testTour", "C:/keinfolder", DateTime.Now , 1, 1);

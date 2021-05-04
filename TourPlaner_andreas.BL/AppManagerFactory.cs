@@ -1,8 +1,8 @@
 ﻿namespace TourPlaner_andreas.BL {
     public static class AppManagerFactory {
-        private static AppManager manager;
+        private static IAppManager manager;
 
-        public static AppManager GetFactoryManager() {
+        public static IAppManager GetFactoryManager() {
             if (manager == null) {
                 manager = new AppManagerFactoryImpl();
             }

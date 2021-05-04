@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 
@@ -16,12 +17,17 @@ namespace TourPlaner_andreas.ViewModels {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
-        protected void ValidatePropertyName(string propertyName) {
+        protected void ValidatePropertyName(string propertyName)
+        {  
+            Debug.WriteLine(propertyName);
+            Debug.WriteLine(this);
+            Debug.WriteLine(TypeDescriptor.GetProperties(this)[propertyName]);
             if (TypeDescriptor.GetProperties(this)[propertyName] == null) {
                 log.Error("Invalid propery name: " + propertyName);
                 throw new ArgumentException("Invalid propery name: " + propertyName);
                
             }
+           
         }
     }
 }
