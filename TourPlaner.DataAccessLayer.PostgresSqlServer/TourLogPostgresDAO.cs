@@ -17,10 +17,9 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         private IDatabase database;
         private ITourItemDAO tourItemDAO;
-        private const string SQL_FIND_BY_MEDIAITEMID = "SELECT * from  public.\"logs\" WHERE \"Id\"=@Id;";
-        private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tourLogs\" WHERE \"tourID\" =@TourLogId;";
-        private const string SQL_INSERT_NEW_ITEMLOG = "INSERT INTO public.\"tourLogs\" (\"LogText\", \"TourItemId\") VALUES (@LogText,@TourItemId) RETURNING \"Id\";";
-
+        private const string SQL_FIND_BY_LOGITEMID = "SELECT * from  public.\"logs\" WHERE \"logid\"=@logid;";
+        private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"logs\" WHERE \"touritemid\" =@touritemid;";
+        private const string SQL_INSERT_NEW_ITEMLOG = "INSERT INTO public.\"logs\" (\"logid\",\"date\",\"maxvelocity\",\"minvelocity\",\"avvelocity\",\"caloriesburnt\",\"duration\",\"touritemid\") VALUES (@logid,@date,@maxvelocity,@minvelocity,@avvelocity,@caloriesburnt,@duration,@touritemid) RETURNING \"logid\";";
         public TourLogPostgresDAO()
         {
             this.database = DALFactory.GetDatabase();
@@ -29,12 +28,18 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
        
 
-        public TourLog AddNewItemLog(string logText, TourItem item)
+        public TourLog AddNewItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem)
 
         {
             DbCommand insertCommand = database.createCommand(SQL_INSERT_NEW_ITEMLOG);
-            database.DefineParameter(insertCommand, "@logtext", DbType.String, logText);
-            database.DefineParameter(insertCommand, "@tourid", DbType.Int32, item.TourID);
+            database.DefineParameter(insertCommand, "@logid", DbType.Int32, logId);
+            database.DefineParameter(insertCommand, "@date", DbType.Date, date);
+            database.DefineParameter(insertCommand, "@maxvelocity", DbType.Int32, maxVelocity);
+            database.DefineParameter(insertCommand, "@minvelocity", DbType.Int32, minVelocity);
+            database.DefineParameter(insertCommand, "@avvelocity", DbType.Int32, avVelocity);
+            database.DefineParameter(insertCommand, "@caloriesburnt", DbType.Int32, caloriesBurnt);
+            database.DefineParameter(insertCommand, "@duration", DbType.Int32, duration);
+            database.DefineParameter(insertCommand, "@touritemid", DbType.Int32, loggedItem.TourID);
             return FindById(database.ExecuteScalar(insertCommand));
 
 
@@ -42,8 +47,8 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         public TourLog FindById(int LogId)
         {
-            DbCommand findCommand = database.createCommand(SQL_FIND_BY_MEDIAITEMID);
-            database.DefineParameter(findCommand, "@Id", DbType.Int32, LogId);
+            DbCommand findCommand = database.createCommand(SQL_FIND_BY_LOGITEMID);
+            database.DefineParameter(findCommand, "@logid", DbType.Int32, LogId);
             IEnumerable<TourLog> tourLogList = QueryTourLogsFromDb(findCommand);
             return tourLogList.FirstOrDefault();
         }
@@ -51,7 +56,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         public IEnumerable<TourLog> GetLogsForTourItem(TourItem item)
         {
             DbCommand getLogsCommand = database.createCommand(SQL_GET_ALL_ITEMS);
-            database.DefineParameter(getLogsCommand, "@TourItemId", DbType.Int32, item.TourID);
+            database.DefineParameter(getLogsCommand, "@touritemid", DbType.Int32, item.TourID);
             return QueryTourLogsFromDb(getLogsCommand);
         }
 
@@ -63,9 +68,14 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
                 while (reader.Read())
                 {
                     tourLogList.Add(new TourLog(
-                        (int)reader["Id"],
-                        (string)reader["LogText"],
-                       tourItemDAO.FindById((int)reader["TourItemId"])
+                        (int)reader["logid"],
+                        DateTime.Parse(reader["date"].ToString()),
+                        (int)reader["maxvelocity"],
+                        (int)reader["minvelocity"],
+                        (int)reader["avvelocity"],
+                        (int)reader["caloriesburnt"],
+                        (int)reader["duration"],
+                       tourItemDAO.FindById((int)reader["touritemid"])
                     ));
                 }
             }

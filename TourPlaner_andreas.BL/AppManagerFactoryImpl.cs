@@ -23,7 +23,6 @@ namespace TourPlaner_andreas.BL {
         public IEnumerable<TourItem> GetItems(TourFolder folder)
         {
             ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
-            //CreatePdf(tourItemDAO.GetItems(folder));
             return tourItemDAO.GetItems(folder);
             
 
@@ -33,6 +32,12 @@ namespace TourPlaner_andreas.BL {
         {
             // usally located somewhere on the disk
             return new TourFolder();
+        }
+
+        public IEnumerable<TourLog> GetLogsForTourItem(TourItem touritem)
+        {
+            ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
+            return tourLogDao.GetLogsForTourItem(touritem);
         }
 
         public IEnumerable<TourItem> SearchForItems(string itemName, TourFolder folder, bool caseSensitive = false)
@@ -46,10 +51,10 @@ namespace TourPlaner_andreas.BL {
             return items.Where(x => x.Name.ToLower().Contains(itemName.ToLower()));
         }
 
-        public TourLog CreateItemLog(string logText, TourItem item)
+        public TourLog CreateItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem)
         {
             ITourLogDAO tourLogDAO = DALFactory.CreateTourLogDAO();
-            return tourLogDAO.AddNewItemLog(logText, item);
+            return tourLogDAO.AddNewItemLog(logId, date, maxVelocity, minVelocity, avVelocity,caloriesBurnt,duration,loggedItem);
         }
 
         public TourItem CreateItem(int tourId, string name, string url, DateTime creationTime, int tourLength, int duration)
@@ -57,11 +62,16 @@ namespace TourPlaner_andreas.BL {
             ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
             return tourItemDAO.AddNewItem(tourId,name, url, creationTime, tourLength,duration);
         }
+        public void DeleteTourWithId(TourItem touritem)
+        {
+            ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
+            tourItemDAO.DeleteById(touritem.TourID);
+        }
 
         public void CreatePdf(IEnumerable<TourItem> tourItems)
         {
             
-            PdfWriter writer = new PdfWriter("demo.pdf");
+            PdfWriter writer = new PdfWriter("Reports.pdf");
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
@@ -85,6 +95,8 @@ namespace TourPlaner_andreas.BL {
 
             document.Close();
         }
+
+       
     }
 
         

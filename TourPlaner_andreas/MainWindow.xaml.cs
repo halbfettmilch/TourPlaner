@@ -27,7 +27,7 @@ namespace TourPlaner_andreas
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new TourFolderVM(AppManagerFactory.GetFactoryManager());
+            this.DataContext = new MainViewModel(AppManagerFactory.GetFactoryManager());
         }
 
     }

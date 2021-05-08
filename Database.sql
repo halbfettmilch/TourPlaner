@@ -6,7 +6,7 @@ DROP TABLE logs CASCADE;
 --Creating Tables
 
 Create TABLE IF NOT EXISTS tours(
-tourid INT,
+tourid INT PRIMARY KEY,
 name TEXT,
 url TEXT,
 creationtime DATE,
@@ -16,13 +16,26 @@ duration INT
 );
 
 Create Table IF NOT EXISTS logs(
-logid INT,
-logtext TEXT,
+logid INT PRIMARY KEY,
+date DATE,
+maxvelocity INT,
+minvelocity INT,
+avvelocity INT,
+caloriesburnt INT,
+duration INT,
 touritemid INT
 );
 
-
+ALTER TABLE logs ADD FOREIGN KEY ("touritemid")
+REFERENCES tours ("tourid") ON DELETE CASCADE;
 
 --Insert statments for testing
 
-Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration) values ('1','"tour im Prater"','"empty"','2013-06-01','50','33');
+Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration) values ('1','"tour im Prater"','"empty"','2013-06-01','50','13');
+Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration) values ('2','"Tulln-Wien"','"empty"','2013-07-01','50','32');
+Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration) values ('3','"Ybbs-Gmunden"','"empty"','2013-07-22','50','44');
+Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration) values ('4','"Gmunden-Strobl"','"empty"','2018-05-01','50','5');
+Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration) values ('5','"lacknergasse-Gsoellnergasse"','"empty"','2002-02-02','50','69');
+Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration) values ('6','"Wien-Porto"','"empty"','2001-08-02','50','55');
+
+Insert into logs(logid,date,maxvelocity,minvelocity,avvelocity,caloriesburnt,duration,touritemid) values ('5','2013-07-01','2','3','4','5','6','1');

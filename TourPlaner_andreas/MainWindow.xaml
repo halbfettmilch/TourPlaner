@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:viewmodels="clr-namespace:TourPlaner_andreas.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:TourFolderVM}"
+        xmlns:viewmodels="clr-namespace:TourPlaner_andreas.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
@@ -69,7 +69,7 @@
                         </TabItem>
                        <TabItem Header="Description">
                             <DockPanel>
-                                <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding CurrentItem}">
+                                <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding currentItemInfos}">
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="ID" Binding="{Binding TourID}"/>
                                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
@@ -84,15 +84,15 @@
                         </TabItem>
                     </TabControl>
                     <GridSplitter Grid.Row="1" Background="#302f2d" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
-                    <DataGrid Grid.Row="2">
+                    <DataGrid Grid.Row="2" ItemsSource="{Binding logs}">
                         <DataGrid.Columns>
-                           
-                            <DataGridTextColumn Header="Date"/>
-                            <DataGridTextColumn Header="max velocity"/>
-                            <DataGridTextColumn Header="min velocity"/>
-                            <DataGridTextColumn Header="av. velocity"/>
-                            <DataGridTextColumn Header="Calories burnt"/>
-                            <DataGridTextColumn Header="Duration"/>
+
+                            <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
+                            <DataGridTextColumn Header="max velocity" Binding="{Binding MaxVelocity}"/>
+                            <DataGridTextColumn Header="min velocity" Binding="{Binding MinVelocity}"/>
+                            <DataGridTextColumn Header="av. velocity" Binding="{Binding AvVelocity}"/>
+                            <DataGridTextColumn Header="Calories burnt" Binding="{Binding CaloriesBurnt}"/>
+                            <DataGridTextColumn Header="Duration" Binding="{Binding Date}"/>
                         </DataGrid.Columns>
                         
                     </DataGrid>

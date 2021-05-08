@@ -17,14 +17,14 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         private const string SQL_FIND_BY_ID = "SELECT * from  public.\"tours\" WHERE \"tourid\"=@tourid;";
         private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tours\";";
         private const string SQL_INSERT_NEW_ITEM = "INSERT INTO public.\"tours\" (\"tourid\", \"name\", \"url\",\"creationtime\",\"tourlength\",\"duration\") VALUES (@TourId,@name,@url,@CreationTime,@TourLength,@Duration) RETURNING \"tourid\";"; // need further work
-
+        private const string SQL_DELETE_TOUR = "DELETE from public.\"tours\" WHERE \"tourid\"=@tourid;"; //work in Progress
         public TourItemPostgresDAO()
         {
             this.database = DALFactory.GetDatabase();
            
         }
 
-        //needs further work
+        
 
         public TourItem AddNewItem(int tourId,string name, string url, DateTime creationTime, int tourLength, int duration)
         {
@@ -45,6 +45,13 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
             IEnumerable<TourItem> tourItems = QueryTourItemsFromDb(findCommand);
             return tourItems.FirstOrDefault();
 
+        }
+        public void DeleteById(int itemId) //work in Progress
+        {
+            DbCommand deleteCommand = database.createCommand(SQL_DELETE_TOUR);
+            database.DefineParameter(deleteCommand, "@tourid", DbType.Int32, itemId);
+            IDataReader reader = database.ExecuteReader(deleteCommand);
+            
         }
 
         public IEnumerable<TourItem> GetItems(TourFolder folder)

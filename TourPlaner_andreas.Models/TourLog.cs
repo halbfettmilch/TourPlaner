@@ -8,14 +8,24 @@ namespace TourPlaner_andreas.Models
 {
     public class TourLog
     {
-        public int Id { get; set; }
-        public string LogText { get; set; }
+        public int LogId { get; set; }
+        public DateTime Date { get; set; }
+        public int MaxVelocity { get; set; }
+        public int MinVelocity { get; set; }
+        public int AvVelocity { get; set; }
+        public int CaloriesBurnt { get; set; }
+        public int Duration { get; set; }
         public TourItem LogTourItem { get; set; }
 
-        public TourLog(int id, string logText, TourItem loggedItem)
+        public TourLog(int logId, DateTime date,int maxVelocity,int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem)
         {
-            this.Id = id;
-            this.LogText = logText;
+            this.LogId = logId;
+            this.Date = date;
+            this.MaxVelocity = maxVelocity;
+            this.MinVelocity = minVelocity;
+            this.AvVelocity = avVelocity;
+            this.CaloriesBurnt = caloriesBurnt;
+            this.Duration = duration;
             this.LogTourItem = loggedItem;
         }
     }

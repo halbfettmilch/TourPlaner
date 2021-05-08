@@ -8,8 +8,8 @@ using TourPlaner_andreas.BL;
 using TourPlaner_andreas.Models;
 //enthält die Funktionen die ein Binding auf das MainWindow haben
 namespace TourPlaner_andreas.ViewModels {
-    public class TourFolderVM : ViewModelBase {
-
+    public class MainViewModel : ViewModelBase {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IAppManager tourManager;
         private TourItem currentItem;
         private TourFolder folder;
@@ -19,8 +19,11 @@ namespace TourPlaner_andreas.ViewModels {
         public ICommand ClearCommand { get; set; }
         public ICommand AddTourCommand { get; set; }
         public ICommand DelTourCommand { get; set; }
+        public ICommand AddLogCommand { get; set; }
         public ICommand PrintPdf { get; set; }
         public ObservableCollection<TourItem> Items { get; set; }
+        public ObservableCollection<TourItem> currentItemInfos { get; set; }
+        public ObservableCollection<TourLog> logs { get; set; }
 
         public string SearchName {
             get { return searchName; }
@@ -38,12 +41,14 @@ namespace TourPlaner_andreas.ViewModels {
                 if ((currentItem != value) && (value != null)) {
                     currentItem = value;
                     RaisePropertyChangedEvent(nameof(CurrentItem));
-                    
+                    InitLogListView(currentItem);
+                    InitCurrentItemInfosView(currentItem);
+
                 }
             }
         }
 
-        public TourFolderVM(IAppManager tourManager) {
+        public MainViewModel(IAppManager tourManager) {
             this.tourManager = tourManager;
             Items = new ObservableCollection<TourItem>();
             folder = tourManager.GetTourFolder("Get Tour Folder From Disk");
@@ -62,44 +67,74 @@ namespace TourPlaner_andreas.ViewModels {
                 Items.Clear();
                 SearchName = "";
 
-                FillListView();
+                FillTourListView();
             });
             this.PrintPdf = new RelayCommand(o => {
-               tourManager.CreatePdf(tourManager.GetItems(folder));
+                log.Info("Report Created");
+                tourManager.CreatePdf(tourManager.GetItems(folder));
                
             });
 
             this.AddTourCommand = new RelayCommand(o =>
             {
                 TourItem genItem = tourManager.CreateItem(1, "testTour", "C:/keinfolder", DateTime.Now , 1, 1);
+                log.Info("New Tour added");
                 Items.Add(genItem);
+            });
+            this.AddLogCommand = new RelayCommand(o =>
+            {
+                TourLog genItem = tourManager.CreateItemLog(1, DateTime.Today, 59, 2, 20, 1,1,currentItem);// touritemId?
+                log.Info("New Log added to Tour");
+                logs.Add(genItem);
             });
 
             this.DelTourCommand = new RelayCommand(o =>
-            {
-               
+            {   
+                tourManager.DeleteTourWithId(currentItem);
+                Items.Remove(currentItem);
+                log.Info("Tour Deleted");
             });
 
 
-            InitListView();
+            InitTourListView();
         }
 
 
-        public void InitListView() {
+        public void InitTourListView() {
             Items = new ObservableCollection<TourItem>();
-            FillListView();
+            FillTourListView();
         }
 
-        private void FillListView() {
+        private void FillTourListView() {
             foreach (TourItem item in tourManager.GetItems(folder)) {
                 Items.Add(item);
             }
         }
+        public void InitLogListView(TourItem currentItem)
+        {
+            logs = new ObservableCollection<TourLog>();
+            FillLogListView(currentItem);
+        }
 
-       
-       
+        private void FillLogListView(TourItem currentitem)
+        {
+            foreach (TourLog item in tourManager.GetLogsForTourItem(currentitem))
+            {   
+                logs.Add(item);
+            }
+        }
+        public void InitCurrentItemInfosView(TourItem currentItem)
+        {
+            currentItemInfos = new ObservableCollection<TourItem>();
+            currentItemInfos.Add(currentItem);
+            
+        }
 
-       
-      
+
+
+
+
+
+
     }
 }

@@ -22,9 +22,9 @@ namespace TourPlaner.DataAcessLayer.FileAccess
             this.tourItemDAO = DALFactory.CreateTourItemDAO();
         }
 
-        public TourLog AddNewItemLog(string logText, TourItem item)
+        public TourLog AddNewItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem)
         {
-            int id = fileAccess.CreateNewTourLogFile(logText, item);
+            int id = fileAccess.CreateNewTourLogFile(logId, date, maxVelocity, minVelocity, avVelocity, caloriesBurnt,duration,loggedItem);
             return FindById(id);
         }
 
@@ -42,19 +42,24 @@ namespace TourPlaner.DataAcessLayer.FileAccess
 
         private IEnumerable<TourLog> QueryFromFileSystem(IEnumerable<FileInfo> foundFiles)
         {
-            List<TourLog> foundMediaLogs = new List<TourLog>();
+            List<TourLog> foundTourLogs = new List<TourLog>();
 
             foreach (FileInfo file in foundFiles)
             {
                 string[] fileLines = File.ReadAllLines(file.FullName);
-                foundMediaLogs.Add(new TourLog(
-                    int.Parse(fileLines[0]),        // id
-                    fileLines[1],                   // logText
-                    tourItemDAO.FindById(int.Parse(fileLines[2]))         // mediaItemId
+                foundTourLogs.Add(new TourLog(
+                    int.Parse(fileLines[0]),        
+                    DateTime.Parse(fileLines[1]),
+                    int.Parse(fileLines[2]),
+                    int.Parse(fileLines[3]),
+                    int.Parse(fileLines[4]),
+                    int.Parse(fileLines[5]),
+                    int.Parse(fileLines[6]),
+                    tourItemDAO.FindById(int.Parse(fileLines[7]))         // mediaItemId
                 ));
             }
 
-            return foundMediaLogs;
+            return foundTourLogs;
         }
     }
 }

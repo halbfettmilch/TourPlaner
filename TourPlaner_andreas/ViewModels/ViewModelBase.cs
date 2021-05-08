@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 
 
-//Property Changed Command wird erstellt um zu Prüfuen ob sich etwas bei der Ansicht verändert hat (bsp Suchtext muss neu reingeladen werden)
+//Property Changed Event wird erstellt um zu Prüfuen ob sich etwas bei der Ansicht verändert hat (bsp Suchtext muss neu reingeladen werden)
 namespace TourPlaner_andreas.ViewModels {
 
     public abstract class ViewModelBase : INotifyPropertyChanged {
@@ -18,11 +18,9 @@ namespace TourPlaner_andreas.ViewModels {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
         protected void ValidatePropertyName(string propertyName)
-        {  
-            Debug.WriteLine(propertyName);
-            Debug.WriteLine(this);
-            Debug.WriteLine(TypeDescriptor.GetProperties(this)[propertyName]);
+        {
             if (TypeDescriptor.GetProperties(this)[propertyName] == null) {
+                
                 log.Error("Invalid propery name: " + propertyName);
                 throw new ArgumentException("Invalid propery name: " + propertyName);
                

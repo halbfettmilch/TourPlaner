@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using TourPlaner_andreas.Models;
 
@@ -9,7 +10,7 @@ namespace TourPlaner_andreas.DAL.DAO
     {
         TourLog FindById(int LogId);
 
-        TourLog AddNewItemLog(string logText, TourItem item);  //weil im Touritem steht die dazugehörige ID
+        TourLog AddNewItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem);  //weil im Touritem steht die dazugehörige ID
 
         IEnumerable<TourLog> GetLogsForTourItem(TourItem item);
 
