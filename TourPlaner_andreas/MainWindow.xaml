@@ -69,7 +69,7 @@
                         </TabItem>
                        <TabItem Header="Description">
                             <DockPanel>
-                                <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding currentItemInfos}">
+                                <DataGrid DockPanel.Dock="Top" AutoGenerateColumns="False" ItemsSource="{Binding CurrentItemInfos}">
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="ID" Binding="{Binding TourID}"/>
                                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
@@ -84,7 +84,7 @@
                         </TabItem>
                     </TabControl>
                     <GridSplitter Grid.Row="1" Background="#302f2d" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
-                    <DataGrid Grid.Row="2" ItemsSource="{Binding logs}">
+                    <DataGrid Grid.Row="2"  AutoGenerateColumns="False" ItemsSource="{Binding Logs}">
                         <DataGrid.Columns>
 
                             <DataGridTextColumn Header="Date" Binding="{Binding Date}"/>
@@ -92,7 +92,7 @@
                             <DataGridTextColumn Header="min velocity" Binding="{Binding MinVelocity}"/>
                             <DataGridTextColumn Header="av. velocity" Binding="{Binding AvVelocity}"/>
                             <DataGridTextColumn Header="Calories burnt" Binding="{Binding CaloriesBurnt}"/>
-                            <DataGridTextColumn Header="Duration" Binding="{Binding Date}"/>
+                            <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
                         </DataGrid.Columns>
                         
                     </DataGrid>

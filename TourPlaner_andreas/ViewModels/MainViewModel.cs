@@ -22,8 +22,9 @@ namespace TourPlaner_andreas.ViewModels {
         public ICommand AddLogCommand { get; set; }
         public ICommand PrintPdf { get; set; }
         public ObservableCollection<TourItem> Items { get; set; }
-        public ObservableCollection<TourItem> currentItemInfos { get; set; }
-        public ObservableCollection<TourLog> logs { get; set; }
+        private ObservableCollection<TourLog> logs;
+        private ObservableCollection<TourItem> currentItemInfos;
+        
 
         public string SearchName {
             get { return searchName; }
@@ -44,6 +45,41 @@ namespace TourPlaner_andreas.ViewModels {
                     InitLogListView(currentItem);
                     InitCurrentItemInfosView(currentItem);
 
+                }
+            }
+        }
+
+        public ObservableCollection<TourLog> Logs
+        {
+            get
+            {
+                return logs;
+
+            }
+
+            set {
+                if (logs != value)
+                {
+                    logs = value;
+                    RaisePropertyChangedEvent(nameof(Logs));
+                }
+                    
+            }
+        }
+        public ObservableCollection<TourItem> CurrentItemInfos
+        {
+            get
+            {
+                return currentItemInfos;
+
+            }
+
+            set
+            {
+                if (currentItemInfos != value)
+                {
+                    currentItemInfos = value;
+                    RaisePropertyChangedEvent(nameof(CurrentItemInfos));
                 }
             }
         }
@@ -85,7 +121,7 @@ namespace TourPlaner_andreas.ViewModels {
             {
                 TourLog genItem = tourManager.CreateItemLog(1, DateTime.Today, 59, 2, 20, 1,1,currentItem);// touritemId?
                 log.Info("New Log added to Tour");
-                logs.Add(genItem);
+                Logs.Add(genItem);
             });
 
             this.DelTourCommand = new RelayCommand(o =>
@@ -112,7 +148,7 @@ namespace TourPlaner_andreas.ViewModels {
         }
         public void InitLogListView(TourItem currentItem)
         {
-            logs = new ObservableCollection<TourLog>();
+            Logs = new ObservableCollection<TourLog>();
             FillLogListView(currentItem);
         }
 
@@ -120,13 +156,13 @@ namespace TourPlaner_andreas.ViewModels {
         {
             foreach (TourLog item in tourManager.GetLogsForTourItem(currentitem))
             {   
-                logs.Add(item);
+                Logs.Add(item);
             }
         }
         public void InitCurrentItemInfosView(TourItem currentItem)
         {
-            currentItemInfos = new ObservableCollection<TourItem>();
-            currentItemInfos.Add(currentItem);
+            CurrentItemInfos = new ObservableCollection<TourItem>();
+            CurrentItemInfos.Add(currentItem);
             
         }
 
