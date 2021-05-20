@@ -22,8 +22,15 @@ namespace TourPlaner.DataAcessLayer.FileAccess
 
         public TourItem AddNewItem(int tourId, string name, string url, DateTime creationTime, int tourLength, int duration)
         {
-            int id = fileAccess.CreateNewTourItemFile(tourId,name,url,creationTime,tourLength,duration);
-            return FindById(id);
+            if (FindById(tourId) != null)
+            {
+                return null;
+            }
+          
+                int id = fileAccess.CreateNewTourItemFile(tourId, name, url, creationTime, tourLength, duration);
+                return FindById(id);
+            
+               
         }
 
         public TourItem FindById(int itemId)

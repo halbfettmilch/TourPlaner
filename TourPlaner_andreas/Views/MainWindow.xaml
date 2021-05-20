@@ -56,7 +56,12 @@
             </DockPanel>
             <GridSplitter Grid.Column="1" Grid.Row="0" Background="#302f2d" ResizeDirection="Columns" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext"/>
             <DockPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Label DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="5">Tour</Label>
+                <DockPanel DockPanel.Dock="Top">
+                    <Label  HorizontalAlignment="Left" Margin="5">Tour</Label>
+                    <Button DockPanel.Dock="Top" HorizontalAlignment="Right" Width="50">Add Log</Button>
+                    <Button DockPanel.Dock="Top" HorizontalAlignment="Right" Width="50">Del Log</Button>
+                </DockPanel>
+                
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -96,6 +101,11 @@
                         </DataGrid.Columns>
                         
                     </DataGrid>
+                    <DockPanel Grid.Row="2">
+                        <Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Right" Width="50" Command="{Binding AddLogCommand}" >Add Log</Button>
+                        <Button  DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Right" Width="50">Del Log</Button>
+                    </DockPanel>
+                    
                 </Grid>
             </DockPanel>
         </Grid>

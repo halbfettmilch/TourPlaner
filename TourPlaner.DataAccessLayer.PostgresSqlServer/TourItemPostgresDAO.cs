@@ -28,6 +28,10 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         public TourItem AddNewItem(int tourId,string name, string url, DateTime creationTime, int tourLength, int duration)
         {
+            if (FindById(tourId) != null)
+            {
+                return null;
+            }
             DbCommand insertCommand = database.createCommand(SQL_INSERT_NEW_ITEM);
             database.DefineParameter(insertCommand, "@tourid",DbType.Int32, tourId);
             database.DefineParameter(insertCommand, "@name", DbType.String, name);

@@ -31,6 +31,10 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         public TourLog AddNewItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem)
 
         {
+            if (FindById(logId) != null)
+            {
+                return null;
+            }
             DbCommand insertCommand = database.createCommand(SQL_INSERT_NEW_ITEMLOG);
             database.DefineParameter(insertCommand, "@logid", DbType.Int32, logId);
             database.DefineParameter(insertCommand, "@date", DbType.Date, date);

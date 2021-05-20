@@ -51,16 +51,32 @@ namespace TourPlaner_andreas.BL {
             return items.Where(x => x.Name.ToLower().Contains(itemName.ToLower()));
         }
 
-        public TourLog CreateItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem)
+        public TourLog CreateItemLog( DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem)
         {
+            Random rnd = new Random();
             ITourLogDAO tourLogDAO = DALFactory.CreateTourLogDAO();
-            return tourLogDAO.AddNewItemLog(logId, date, maxVelocity, minVelocity, avVelocity,caloriesBurnt,duration,loggedItem);
+            TourLog logToReturn = null;
+            do
+            {
+                int logID = rnd.Next(999999);
+                logToReturn = tourLogDAO.AddNewItemLog(logID,date, maxVelocity, minVelocity, avVelocity, caloriesBurnt,
+                    duration, loggedItem);
+            } while (logToReturn == null);
+
+            return logToReturn;
         }
 
-        public TourItem CreateItem(int tourId, string name, string url, DateTime creationTime, int tourLength, int duration)
+        public TourItem CreateItem( string name, string url, DateTime creationTime, int tourLength, int duration)
         {
+            Random rnd = new Random();
             ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
-            return tourItemDAO.AddNewItem(tourId,name, url, creationTime, tourLength,duration);
+            TourItem itemToReturn=null;
+            do
+            {
+                int id = rnd.Next(999999);
+                itemToReturn = tourItemDAO.AddNewItem(id, name, url, creationTime, tourLength, duration);
+            } while (itemToReturn == null);
+            return itemToReturn;
         }
         public void DeleteTourWithId(TourItem touritem)
         {

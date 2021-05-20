@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
-using TourPlaner_andreas.ViewModels;
+using TourPlaner_andreas.Commands;
 using TourPlaner_andreas.BL;
 using TourPlaner_andreas.Models;
+using TourPlaner_andreas.Views;
+
 //enthält die Funktionen die ein Binding auf das MainWindow haben
 namespace TourPlaner_andreas.ViewModels {
     public class MainViewModel : ViewModelBase {
@@ -21,6 +24,7 @@ namespace TourPlaner_andreas.ViewModels {
         public ICommand DelTourCommand { get; set; }
         public ICommand AddLogCommand { get; set; }
         public ICommand PrintPdf { get; set; }
+        public ICommand CloseWindow { get; set; }
         public ObservableCollection<TourItem> Items { get; set; }
         private ObservableCollection<TourLog> logs;
         private ObservableCollection<TourItem> currentItemInfos;
@@ -110,18 +114,44 @@ namespace TourPlaner_andreas.ViewModels {
                 tourManager.CreatePdf(tourManager.GetItems(folder));
                
             });
+      
+
+            this.CloseWindow = new RelayCommand(o => ((Window)o).Close()
+
+            );
 
             this.AddTourCommand = new RelayCommand(o =>
             {
-                TourItem genItem = tourManager.CreateItem(1, "testTour", "C:/keinfolder", DateTime.Now , 1, 1);
-                log.Info("New Tour added");
-                Items.Add(genItem);
+                AddTourWindow atw = new AddTourWindow();
+                var result = atw.ShowDialog();
+                if (result == true && atw.name != "" && atw.creationTime != "" && atw.length != "" && atw.expectedDuration != "")
+                {
+                    int length = Convert.ToInt32(atw.length);
+                    int eDuration = Convert.ToInt32(atw.expectedDuration);
+                    TourItem genItem = tourManager.CreateItem( atw.name, "C:/keinfolder", DateTime.Now, length, eDuration);
+                    log.Info("New Tour added");
+                    Items.Add(genItem);
+                }
+              
             });
             this.AddLogCommand = new RelayCommand(o =>
-            {
-                TourLog genItem = tourManager.CreateItemLog(1, DateTime.Today, 59, 2, 20, 1,1,currentItem);// touritemId?
-                log.Info("New Log added to Tour");
-                Logs.Add(genItem);
+            {   
+                AddLogWindow alw = new AddLogWindow();
+                var result = alw.ShowDialog();
+                if (result == true && alw.date != "" && alw.duration != "" && alw.maxVelocity != "" && alw.minVelocity != "" && alw.avVelocity != "" && alw.date != "" && alw.caloriesBurnt != "")
+                {
+                    
+                    var date = DateTime.Parse(alw.date);
+                    int maxVel = Convert.ToInt32(alw.maxVelocity);
+                    int minVel = Convert.ToInt32(alw.minVelocity);
+                    int avVel = Convert.ToInt32(alw.avVelocity);
+                    int calBurnt = Convert.ToInt32(alw.caloriesBurnt);
+                    int dur = Convert.ToInt32(alw.duration);
+                    TourLog genItem = tourManager.CreateItemLog( date, maxVel, minVel, avVel, calBurnt, dur, currentItem);// touritemId?
+                    log.Info("New Log added to Tour");
+                    Logs.Add(genItem);
+                }
+               
             });
 
             this.DelTourCommand = new RelayCommand(o =>

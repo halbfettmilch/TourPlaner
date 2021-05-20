@@ -24,6 +24,10 @@ namespace TourPlaner.DataAcessLayer.FileAccess
 
         public TourLog AddNewItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem)
         {
+            if (FindById(logId) != null)
+            {
+                return null;
+            }
             int id = fileAccess.CreateNewTourLogFile(logId, date, maxVelocity, minVelocity, avVelocity, caloriesBurnt,duration,loggedItem);
             return FindById(id);
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 //ICommand wird definiert
-namespace TourPlaner_andreas.ViewModels {
+namespace TourPlaner_andreas.Commands {
     public class RelayCommand : ICommand {
         private readonly Action<object> executeAction;
         private readonly Predicate<object> canExecutePredicate;
