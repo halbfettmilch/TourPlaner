@@ -83,6 +83,11 @@ namespace TourPlaner_andreas.BL {
             ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
             tourItemDAO.DeleteById(touritem.TourID);
         }
+        public void DeleteLogWithId(TourLog tourLog)
+        {
+            ITourLogDAO tourLogDao = DALFactory.CreateTourLogDAO();
+            tourLogDao.DeleteById(tourLog.LogId);
+        }
 
         public void CreatePdf(IEnumerable<TourItem> tourItems)
         {

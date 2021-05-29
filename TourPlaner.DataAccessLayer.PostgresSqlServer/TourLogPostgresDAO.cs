@@ -20,6 +20,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         private const string SQL_FIND_BY_LOGITEMID = "SELECT * from  public.\"logs\" WHERE \"logid\"=@logid;";
         private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"logs\" WHERE \"touritemid\" =@touritemid;";
         private const string SQL_INSERT_NEW_ITEMLOG = "INSERT INTO public.\"logs\" (\"logid\",\"date\",\"maxvelocity\",\"minvelocity\",\"avvelocity\",\"caloriesburnt\",\"duration\",\"touritemid\") VALUES (@logid,@date,@maxvelocity,@minvelocity,@avvelocity,@caloriesburnt,@duration,@touritemid) RETURNING \"logid\";";
+        private const string SQL_DELETE_LOG = "DELETE from public.\"logs\" WHERE \"logid\"=@logid;"; //work in Progress
         public TourLogPostgresDAO()
         {
             this.database = DALFactory.GetDatabase();
@@ -55,6 +56,14 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
             database.DefineParameter(findCommand, "@logid", DbType.Int32, LogId);
             IEnumerable<TourLog> tourLogList = QueryTourLogsFromDb(findCommand);
             return tourLogList.FirstOrDefault();
+        }
+
+        public void DeleteById(int logId) //work in Progress
+        {
+            DbCommand deleteCommand = database.createCommand(SQL_DELETE_LOG);
+            database.DefineParameter(deleteCommand, "@logid", DbType.Int32, logId);
+            IDataReader reader = database.ExecuteReader(deleteCommand);
+
         }
 
         public IEnumerable<TourLog> GetLogsForTourItem(TourItem item)

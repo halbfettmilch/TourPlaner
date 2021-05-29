@@ -9,28 +9,32 @@
         Title="AddLogWindow" Height="450" Width="800">
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
+
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100">Date</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5"  Name="Date"/>
+            <DatePicker Margin="2"
+                        PreviewTextInput="NumberValidationTextBox" 
+                        VerticalAlignment="Center"
+                        Name="Date"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Max Velocity</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="MaxVelocity" />
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="MaxVelocity" PreviewTextInput="NumberValidationTextBox" />
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Min Velocity</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="MinVelocity"/>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="MinVelocity" PreviewTextInput="NumberValidationTextBox"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Av Velocity</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="AvVelocity"/>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="AvVelocity" PreviewTextInput="NumberValidationTextBox"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Calories burnt</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="CaloriesBurnt" />
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="CaloriesBurnt" PreviewTextInput="NumberValidationTextBox" />
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Duration</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Duration" />
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Duration" PreviewTextInput="NumberValidationTextBox" />
         </DockPanel>
         
            

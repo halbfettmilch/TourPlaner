@@ -15,11 +15,11 @@
       
        <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Length</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Length"/>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Length" PreviewTextInput="NumberValidationTextBox"/>
        </DockPanel>
        <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Expected Duration</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Expected_Duration" />
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Expected_Duration" PreviewTextInput="NumberValidationTextBox" />
        </DockPanel>
        <DockPanel DockPanel.Dock="Top">
            <Label DockPanel.Dock="Top">Tour Description</Label>

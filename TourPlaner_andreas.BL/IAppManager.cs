@@ -12,5 +12,6 @@ namespace TourPlaner_andreas.BL {
         TourItem CreateItem( string name, string url, DateTime creationTime, int tourLength, int duration);
         public void CreatePdf(IEnumerable<TourItem> tourItems);
         public void DeleteTourWithId(TourItem touritem);
+        public void DeleteLogWithId(TourLog logItem);
     }
 }

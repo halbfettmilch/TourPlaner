@@ -38,6 +38,11 @@ namespace TourPlaner.DataAcessLayer.FileAccess
             return QueryFromFileSystem(foundFiles).FirstOrDefault();
         }
 
+        public void DeleteById(int itemId)
+        {
+            //Keine Ahnung wie das gehen soll!
+        }
+
         public IEnumerable<TourLog> GetLogsForTourItem(TourItem item)
         {
             IEnumerable<FileInfo> foundFiles = fileAccess.SearchFiles(item.TourID.ToString(), FileTypes.TourLog);

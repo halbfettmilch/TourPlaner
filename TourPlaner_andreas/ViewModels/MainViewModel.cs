@@ -15,6 +15,7 @@ namespace TourPlaner_andreas.ViewModels {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IAppManager tourManager;
         private TourItem currentItem;
+        private TourLog currentLog;
         private TourFolder folder;
         private string searchName;
 
@@ -23,10 +24,11 @@ namespace TourPlaner_andreas.ViewModels {
         public ICommand AddTourCommand { get; set; }
         public ICommand DelTourCommand { get; set; }
         public ICommand AddLogCommand { get; set; }
+        public ICommand DelLogCommand { get; set; }
         public ICommand PrintPdf { get; set; }
         public ICommand CloseWindow { get; set; }
         public ObservableCollection<TourItem> Items { get; set; }
-        private ObservableCollection<TourLog> logs;
+        public ObservableCollection<TourLog> logs;
         private ObservableCollection<TourItem> currentItemInfos;
         
 
@@ -48,6 +50,21 @@ namespace TourPlaner_andreas.ViewModels {
                     RaisePropertyChangedEvent(nameof(CurrentItem));
                     InitLogListView(currentItem);
                     InitCurrentItemInfosView(currentItem);
+
+                }
+            }
+        }
+
+        public TourLog CurrentLog
+        {
+            get { return currentLog; }
+            set
+            {
+                if ((currentLog != value) && (value != null))
+                {
+                    currentLog = value;
+                    RaisePropertyChangedEvent(nameof(CurrentLog));
+                   
 
                 }
             }
@@ -159,6 +176,13 @@ namespace TourPlaner_andreas.ViewModels {
                 tourManager.DeleteTourWithId(currentItem);
                 Items.Remove(currentItem);
                 log.Info("Tour Deleted");
+            });
+
+            this.DelLogCommand = new RelayCommand(o =>
+            {
+                tourManager.DeleteLogWithId(currentLog);
+                logs.Remove(currentLog);
+                log.Info("Log Deleted");
             });
 
 
