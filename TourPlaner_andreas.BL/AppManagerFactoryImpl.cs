@@ -66,7 +66,7 @@ namespace TourPlaner_andreas.BL {
             return logToReturn;
         }
 
-        public TourItem CreateItem( string name, string url, DateTime creationTime, int tourLength, int duration)
+        public TourItem CreateItem( string name, string url, DateTime creationTime, int tourLength, int duration, string description)
         {
             Random rnd = new Random();
             ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
@@ -74,7 +74,7 @@ namespace TourPlaner_andreas.BL {
             do
             {
                 int id = rnd.Next(999999);
-                itemToReturn = tourItemDAO.AddNewItem(id, name, url, creationTime, tourLength, duration);
+                itemToReturn = tourItemDAO.AddNewItem(id, name, url, creationTime, tourLength, duration, description);
             } while (itemToReturn == null);
             return itemToReturn;
         }

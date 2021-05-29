@@ -19,6 +19,18 @@
                     <MenuItem Header="App Settings"/>
                     <MenuItem Header="User Settings"/>
                 </MenuItem>
+                <MenuItem Header="_Tours">
+                    <MenuItem Header="Create Tour" Command="{Binding AddTourCommand}"/>
+                    <MenuItem Header="Delete Tour" Command="{Binding DelTourCommand}"/>
+                    <MenuItem Header="Import Tour" IsEnabled="{Binding TourSelected}"/>
+                    <MenuItem Header="Export Tour" IsEnabled="{Binding LogSelected}"/>
+                    <MenuItem Header="Export Report" Command="{Binding PrintPdf}"/>
+                </MenuItem>
+                <MenuItem Header="_Logs">
+                    <MenuItem Header="Add Log" Command="{Binding AddLogCommand}"/>
+                    <MenuItem Header="Delete Log" Command="{Binding DelLogCommand}"/>
+                </MenuItem>
+
             </Menu>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
@@ -35,15 +47,6 @@
             <DockPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <DockPanel DockPanel.Dock="Top">
                     <Label DockPanel.Dock="left" HorizontalAlignment="left" Margin="5">Tours</Label>
-                    <Menu DockPanel.Dock="Right">
-                        <MenuItem Header="Export" HorizontalAlignment="Right" Margin="5">
-                            <MenuItem Header=".txt File"/>
-                            <MenuItem Header="Report" Command="{Binding PrintPdf}"/>
-                        </MenuItem>
-                    </Menu>
-                    <Button DockPanel.Dock="right" HorizontalAlignment="right" Margin="5" Command="{Binding DelTourCommand}">Import</Button>
-                    <Button DockPanel.Dock="right" HorizontalAlignment="right" Margin="5" Command="{Binding DelTourCommand}">Delete</Button>
-                    <Button DockPanel.Dock="right" HorizontalAlignment="right" Margin="5" Command="{Binding AddTourCommand}">Create</Button>
                 </DockPanel>
 
                 <ListBox DockPanel.Dock="Top" Margin="5" 
@@ -58,8 +61,6 @@
             <DockPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <DockPanel DockPanel.Dock="Top">
                     <Label  HorizontalAlignment="Left" Margin="5">Tour</Label>
-                    <Button DockPanel.Dock="Top" HorizontalAlignment="Right" Width="50">Add Log</Button>
-                    <Button DockPanel.Dock="Top" HorizontalAlignment="Right" Width="50">Del Log</Button>
                 </DockPanel>
                 
                 <Grid>
@@ -73,7 +74,7 @@
                             <Image Width="320" Height="200"/>
                         </TabItem>
                        <TabItem Header="Description">
-                            <DockPanel>
+                            <DockPanel Name="RouteData">
                                 <DataGrid DockPanel.Dock="Top" AutoGenerateColumns="False" ItemsSource="{Binding CurrentItemInfos}">
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="ID" Binding="{Binding TourID}"/>
@@ -83,8 +84,7 @@
                                         <DataGridTextColumn Header="Expected duration" Binding="{Binding Duration}"/>
                                 </DataGrid.Columns>
                                 </DataGrid>
-                                <Label DockPanel.Dock="Top">Tour Description</Label>
-                           <TextBox DockPanel.Dock="Top">enter Text here...</TextBox>
+                                <TextBlock Text="{Binding CurrentItemInfos[0].Description}"></TextBlock>
                             </DockPanel>
                         </TabItem>
                     </TabControl>
@@ -103,9 +103,7 @@
                     </DataGrid>
                     <DockPanel Grid.Row="2">
                         
-                        <Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Right" Width="50" Command="{Binding AddLogCommand}" >Add Log</Button>
-                        <Button  DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="5" HorizontalAlignment="Right" Width="50" Command="{Binding DelLogCommand}">Del Log</Button>
-                    </DockPanel>
+                         </DockPanel>
                     
                 </Grid>
             </DockPanel>

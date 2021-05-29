@@ -20,14 +20,14 @@ namespace TourPlaner.DataAcessLayer.FileAccess
             this.fileAccess = DALFactory.GetFileAccess();
         }
 
-        public TourItem AddNewItem(int tourId, string name, string url, DateTime creationTime, int tourLength, int duration)
+        public TourItem AddNewItem(int tourId, string name, string url, DateTime creationTime, int tourLength, int duration, string description)
         {
             if (FindById(tourId) != null)
             {
                 return null;
             }
           
-                int id = fileAccess.CreateNewTourItemFile(tourId, name, url, creationTime, tourLength, duration);
+                int id = fileAccess.CreateNewTourItemFile(tourId, name, url, creationTime, tourLength, duration, description);
                 return FindById(id);
             
                
@@ -63,7 +63,8 @@ namespace TourPlaner.DataAcessLayer.FileAccess
                     fileLines[2],
                     DateTime.Parse(fileLines[3]),
                     int.Parse(fileLines[4]),
-                    int.Parse(fileLines[5])
+                    int.Parse(fileLines[5]),
+                    fileLines[6]
 
                     ));
             }

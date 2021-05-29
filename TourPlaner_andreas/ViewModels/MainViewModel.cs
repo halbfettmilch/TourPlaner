@@ -18,6 +18,7 @@ namespace TourPlaner_andreas.ViewModels {
         private TourLog currentLog;
         private TourFolder folder;
         private string searchName;
+        
 
         public ICommand SearchCommand { get; set; }
         public ICommand ClearCommand { get; set; }
@@ -30,7 +31,33 @@ namespace TourPlaner_andreas.ViewModels {
         public ObservableCollection<TourItem> Items { get; set; }
         public ObservableCollection<TourLog> logs;
         private ObservableCollection<TourItem> currentItemInfos;
-        
+        private bool tourSelected = false;
+        private bool logSelected = false;
+
+        public bool TourSelected
+        {
+            get { return tourSelected; }
+            set
+            {
+                if (value != tourSelected)
+                {
+                    tourSelected = value;
+                    RaisePropertyChangedEvent(nameof(TourSelected));
+                }
+            }
+        }
+        public bool LogSelected
+        {
+            get { return logSelected; }
+            set
+            {
+                if (value != logSelected)
+                {
+                    logSelected = value;
+                    RaisePropertyChangedEvent(nameof(LogSelected));
+                }
+            }
+        }
 
         public string SearchName {
             get { return searchName; }
@@ -41,17 +68,21 @@ namespace TourPlaner_andreas.ViewModels {
                 }
             }
         }
+       
 
         public TourItem CurrentItem {
             get { return currentItem; }
-            set {
-                if ((currentItem != value) && (value != null)) {
+            set
+            {
+                if ((currentItem != value) && (value != null))
+                {
                     currentItem = value;
                     RaisePropertyChangedEvent(nameof(CurrentItem));
                     InitLogListView(currentItem);
                     InitCurrentItemInfosView(currentItem);
-
+                    tourSelected = true;
                 }
+                else tourSelected = false;
             }
         }
 
@@ -64,9 +95,10 @@ namespace TourPlaner_andreas.ViewModels {
                 {
                     currentLog = value;
                     RaisePropertyChangedEvent(nameof(CurrentLog));
-                   
+                    logSelected = true;
 
                 }
+                else logSelected = false;
             }
         }
 
@@ -145,7 +177,8 @@ namespace TourPlaner_andreas.ViewModels {
                 {
                     int length = Convert.ToInt32(atw.length);
                     int eDuration = Convert.ToInt32(atw.expectedDuration);
-                    TourItem genItem = tourManager.CreateItem( atw.name, "C:/keinfolder", DateTime.Now, length, eDuration);
+                    
+                    TourItem genItem = tourManager.CreateItem( atw.name, "C:/keinfolder", DateTime.Now, length, eDuration, atw.description);
                     log.Info("New Tour added");
                     Items.Add(genItem);
                 }
@@ -183,6 +216,7 @@ namespace TourPlaner_andreas.ViewModels {
                 tourManager.DeleteLogWithId(currentLog);
                 logs.Remove(currentLog);
                 log.Info("Log Deleted");
+                
             });
 
 

@@ -10,20 +10,20 @@
    <DockPanel>
        <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100">Name</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Name"/>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Name" MaxLength="50"/>
        </DockPanel>
       
        <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Length</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Length" PreviewTextInput="NumberValidationTextBox"/>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Length" PreviewTextInput="NumberValidationTextBox" MaxLength="10"/>
        </DockPanel>
        <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Expected Duration</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Expected_Duration" PreviewTextInput="NumberValidationTextBox" />
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Expected_Duration" PreviewTextInput="NumberValidationTextBox" MaxLength="10"/>
        </DockPanel>
        <DockPanel DockPanel.Dock="Top">
            <Label DockPanel.Dock="Top">Tour Description</Label>
-           <TextBox DockPanel.Dock="Top" Height="200">enter Text here...</TextBox>
+            <TextBox DockPanel.Dock="Top" Height="200" MaxLength="250" Name="Description" >enter Text here...</TextBox>
            <DockPanel DockPanel.Dock="Bottom">
                 <Button DockPanel.Dock="right"  HorizontalAlignment="right" Margin="5" Height="50" Width="50" Click="addTour_Click">Add</Button>
                 <Button DockPanel.Dock="right" HorizontalAlignment="right" Margin="5" Height="50" Width="50" Command ="{Binding CloseWindow}">Cancel</Button>

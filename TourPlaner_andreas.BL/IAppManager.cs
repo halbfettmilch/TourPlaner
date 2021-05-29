@@ -9,7 +9,7 @@ namespace TourPlaner_andreas.BL {
         IEnumerable<TourItem> SearchForItems(string itemName, TourFolder folder, bool caseSensitive = false);
         IEnumerable<TourLog> GetLogsForTourItem( TourItem tour);
         TourLog CreateItemLog(DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem);
-        TourItem CreateItem( string name, string url, DateTime creationTime, int tourLength, int duration);
+        TourItem CreateItem( string name, string url, DateTime creationTime, int tourLength, int duration, string description);
         public void CreatePdf(IEnumerable<TourItem> tourItems);
         public void DeleteTourWithId(TourItem touritem);
         public void DeleteLogWithId(TourLog logItem);

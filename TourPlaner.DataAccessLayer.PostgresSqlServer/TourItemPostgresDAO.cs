@@ -16,7 +16,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         private IDatabase database;
         private const string SQL_FIND_BY_ID = "SELECT * from  public.\"tours\" WHERE \"tourid\"=@tourid;";
         private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tours\";";
-        private const string SQL_INSERT_NEW_ITEM = "INSERT INTO public.\"tours\" (\"tourid\", \"name\", \"url\",\"creationtime\",\"tourlength\",\"duration\") VALUES (@TourId,@name,@url,@CreationTime,@TourLength,@Duration) RETURNING \"tourid\";"; // need further work
+        private const string SQL_INSERT_NEW_ITEM = "INSERT INTO public.\"tours\" (\"tourid\", \"name\", \"url\",\"creationtime\",\"tourlength\",\"duration\",\"description\") VALUES (@TourId,@name,@url,@CreationTime,@TourLength,@Duration,@description) RETURNING \"tourid\";";
         private const string SQL_DELETE_TOUR = "DELETE from public.\"tours\" WHERE \"tourid\"=@tourid;"; //work in Progress
         public TourItemPostgresDAO()
         {
@@ -26,7 +26,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         
 
-        public TourItem AddNewItem(int tourId,string name, string url, DateTime creationTime, int tourLength, int duration)
+        public TourItem AddNewItem(int tourId,string name, string url, DateTime creationTime, int tourLength, int duration, string description)
         {
             if (FindById(tourId) != null)
             {
@@ -39,6 +39,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
             database.DefineParameter(insertCommand, "@creationtime", DbType.Date, creationTime);
             database.DefineParameter(insertCommand, "@tourlength", DbType.Int32, tourLength);
             database.DefineParameter(insertCommand, "@duration", DbType.Int32, duration);
+            database.DefineParameter(insertCommand, "@description", DbType.String, description);
             return FindById(database.ExecuteScalar(insertCommand));
         }
 
@@ -78,8 +79,10 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
                         (string)reader["url"],
                         DateTime.Parse(reader["creationtime"].ToString()),
                         (int)reader["tourlength"],
-                        (int)reader["duration"]
-                      
+                        (int)reader["duration"],
+                        (string)reader["description"]
+
+
                         ));
                 }
             }

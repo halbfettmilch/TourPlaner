@@ -11,11 +11,12 @@ namespace TourPlaner_andreas.Models
         public DateTime CreationTime { get; set; }
         public int TourLength { get; set; }
         public int Duration { get; set; }
-      
-       
-       
+        public string Description { get; set; }
 
-        public TourItem(int id, string name, string url, DateTime creationTime, int tourLength, int duration)
+
+
+
+        public TourItem(int id, string name, string url, DateTime creationTime, int tourLength, int duration, string description)
         {
             this.TourID = id;
             this.Name = name;
@@ -23,6 +24,7 @@ namespace TourPlaner_andreas.Models
             this.CreationTime = creationTime;
             this.TourLength = tourLength;
             this.Duration = duration;
+            this.Description = description;
         }
     }
 }

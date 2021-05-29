@@ -24,6 +24,7 @@ namespace TourPlaner_andreas.Views
         public string creationTime;
         public string length;
         public string expectedDuration;
+        public string description;
         public AddTourWindow()
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace TourPlaner_andreas.Views
             name = Name.Text.ToString();
             length = Length.Text.ToString();
             expectedDuration = Expected_Duration.Text.ToString();
+            description = Description.ToString();
             DialogResult = true;
             Close();
         }
