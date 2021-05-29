@@ -31,14 +31,14 @@ namespace TourPlaner_andreas.ViewModels {
         public ObservableCollection<TourItem> Items { get; set; }
         public ObservableCollection<TourLog> logs;
         private ObservableCollection<TourItem> currentItemInfos;
-        private bool tourSelected = false;
-        private bool logSelected = false;
+        public bool tourSelected = false;
+        public bool logSelected = false;
 
         public bool TourSelected
         {
             get { return tourSelected; }
             set
-            {
+                {
                 if (value != tourSelected)
                 {
                     tourSelected = value;
@@ -81,8 +81,10 @@ namespace TourPlaner_andreas.ViewModels {
                     InitLogListView(currentItem);
                     InitCurrentItemInfosView(currentItem);
                     tourSelected = true;
+                    RaisePropertyChangedEvent(nameof(TourSelected));
                 }
                 else tourSelected = false;
+                RaisePropertyChangedEvent(nameof(TourSelected));
             }
         }
 
@@ -96,9 +98,11 @@ namespace TourPlaner_andreas.ViewModels {
                     currentLog = value;
                     RaisePropertyChangedEvent(nameof(CurrentLog));
                     logSelected = true;
+                    RaisePropertyChangedEvent(nameof(LogSelected));
 
                 }
                 else logSelected = false;
+                RaisePropertyChangedEvent(nameof(LogSelected));
             }
         }
 
