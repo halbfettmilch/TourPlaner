@@ -19,7 +19,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         private ITourItemDAO tourItemDAO;
         private const string SQL_FIND_BY_LOGITEMID = "SELECT * from  public.\"logs\" WHERE \"logid\"=@logid;";
         private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"logs\" WHERE \"touritemid\" =@touritemid;";
-        private const string SQL_INSERT_NEW_ITEMLOG = "INSERT INTO public.\"logs\" (\"logid\",\"date\",\"maxvelocity\",\"minvelocity\",\"avvelocity\",\"caloriesburnt\",\"duration\",\"touritemid\") VALUES (@logid,@date,@maxvelocity,@minvelocity,@avvelocity,@caloriesburnt,@duration,@touritemid) RETURNING \"logid\";";
+        private const string SQL_INSERT_NEW_ITEMLOG = "INSERT INTO public.\"logs\" (\"logid\",\"date\",\"maxvelocity\",\"minvelocity\",\"avvelocity\",\"caloriesburnt\",\"duration\",\"author\",\"commentt\",\"touritemid\") VALUES (@logid,@date,@maxvelocity,@minvelocity,@avvelocity,@caloriesburnt,@duration,@author,@commentt,@touritemid) RETURNING \"logid\";";
         private const string SQL_DELETE_LOG = "DELETE from public.\"logs\" WHERE \"logid\"=@logid;"; //work in Progress
         public TourLogPostgresDAO()
         {
@@ -29,7 +29,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
        
 
-        public TourLog AddNewItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem)
+        public TourLog AddNewItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, string author, string comment, TourItem loggedItem)
 
         {
             if (FindById(logId) != null)
@@ -45,6 +45,8 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
             database.DefineParameter(insertCommand, "@caloriesburnt", DbType.Int32, caloriesBurnt);
             database.DefineParameter(insertCommand, "@duration", DbType.Int32, duration);
             database.DefineParameter(insertCommand, "@touritemid", DbType.Int32, loggedItem.TourID);
+            database.DefineParameter(insertCommand, "@author", DbType.String, author);
+            database.DefineParameter(insertCommand, "@commentt", DbType.String, comment);
             return FindById(database.ExecuteScalar(insertCommand));
 
 
@@ -88,7 +90,10 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
                         (int)reader["avvelocity"],
                         (int)reader["caloriesburnt"],
                         (int)reader["duration"],
-                       tourItemDAO.FindById((int)reader["touritemid"])
+                        (string)reader["author"],
+                        (string)reader["commentt"],
+                        tourItemDAO.FindById((int)reader["touritemid"]
+                        )
                     ));
                 }
             }

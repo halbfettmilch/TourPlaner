@@ -5,7 +5,7 @@ using TourPlaner_andreas.DAL.common;
 
 namespace TourPlanerAndreasTests
 {
-    public class Tests
+    public class DatabaseTests
     {
         [SetUp]
         public void Setup()
@@ -13,7 +13,7 @@ namespace TourPlanerAndreasTests
         }
 
         [Test]
-        public void DatabaseTests()
+        public void DatabaseTest()
         { IDatabase database= DALFactory.GetDatabase();
         string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tours\";";
         DbCommand itemsCommand = database.createCommand(SQL_GET_ALL_ITEMS);

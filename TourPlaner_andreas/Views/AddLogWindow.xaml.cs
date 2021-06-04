@@ -26,6 +26,8 @@ namespace TourPlaner_andreas.Views
         public string avVelocity;
         public string caloriesBurnt;
         public string duration;
+        public string author;
+        public string comment;
         public AddLogWindow()
         {
             InitializeComponent();
@@ -38,6 +40,8 @@ namespace TourPlaner_andreas.Views
             this.avVelocity = AvVelocity.Text.ToString();
             this.caloriesBurnt = CaloriesBurnt.Text.ToString();
             this.duration = Duration.Text.ToString();
+            this.author = Author.Text.ToString();
+            this.comment = Comment.Text.ToString();
             DialogResult = true;
             Close();
         }

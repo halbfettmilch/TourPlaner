@@ -53,7 +53,7 @@ namespace TourPlaner.DataAcessLayer.FileAccess
             return id;
         }
 
-        public int CreateNewTourLogFile(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem)
+        public int CreateNewTourLogFile(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration,string author,string comment, TourItem loggedItem)
         {
 
             int id = Guid.NewGuid().GetHashCode();
@@ -69,6 +69,8 @@ namespace TourPlaner.DataAcessLayer.FileAccess
                 writer.WriteLine(avVelocity);
                 writer.WriteLine(caloriesBurnt);
                 writer.WriteLine(duration);
+                writer.WriteLine(author);
+                writer.WriteLine(comment);
                 writer.WriteLine(loggedItem.TourID);
                
             }

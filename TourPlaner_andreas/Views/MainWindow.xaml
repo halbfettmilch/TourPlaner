@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:viewmodels="clr-namespace:TourPlaner_andreas.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        xmlns:viewmodels="clr-namespace:TourPlaner_andreas.ViewModels"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
@@ -20,11 +22,19 @@
                     <MenuItem Header="User Settings"/>
                 </MenuItem>
                 <MenuItem Header="_Tours">
-                    <MenuItem Header="Create Tour" Command="{Binding AddTourCommand}"/>
+                    <MenuItem Header="Create Tour">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="Click">
+                                <b:InvokeCommandAction Command="{Binding SetDbAccess}" />
+                                <b:InvokeCommandAction Command="{Binding AddTourCommand}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                    </MenuItem>
                     <MenuItem Header="Delete Tour" Command="{Binding DelTourCommand}" IsEnabled="{Binding TourSelected}"/>
                     <MenuItem Header="Import Tour"/>
                     <MenuItem Header="Export Tour" IsEnabled="{Binding TourSelected}"/>
-                    <MenuItem Header="Export Report" Command="{Binding PrintPdf}"/>
+                    <MenuItem Header="Export Tour Report" IsEnabled="{Binding TourSelected}" Command="{Binding PrintPdf}"/>
+                    <MenuItem Header="Export Tour+Logs Report" IsEnabled="{Binding TourSelected}" Command="{Binding PrintAllPdf}"/>
                 </MenuItem>
                 <MenuItem Header="_Logs">
                     <MenuItem Header="Add Log" Command="{Binding AddLogCommand}"/>

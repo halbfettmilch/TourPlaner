@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
@@ -27,12 +28,26 @@ namespace TourPlaner_andreas.ViewModels {
         public ICommand AddLogCommand { get; set; }
         public ICommand DelLogCommand { get; set; }
         public ICommand PrintPdf { get; set; }
+        public ICommand PrintAllPdf { get; set; }
         public ICommand CloseWindow { get; set; }
+        public ICommand SetDbAccess { get; set; }
+        public ICommand SetFileAccess { get; set; }
         public ObservableCollection<TourItem> Items { get; set; }
         public ObservableCollection<TourLog> logs;
         private ObservableCollection<TourItem> currentItemInfos;
         public bool tourSelected = false;
         public bool logSelected = false;
+
+        private static void SetSetting(string key, string value)
+        {
+          //  Configuration configuration =
+           //     ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+          //  configuration.AppSettings.Settings[key].Value = value;
+          //  configuration.Save(ConfigurationSaveMode.Full);
+          //  ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        
 
         public bool TourSelected
         {
@@ -164,10 +179,15 @@ namespace TourPlaner_andreas.ViewModels {
             });
             this.PrintPdf = new RelayCommand(o => {
                 log.Info("Report Created");
-                tourManager.CreatePdf(tourManager.GetItems(folder));
+                tourManager.CreateTourPdf(currentItem);
                
             });
-      
+            this.PrintAllPdf = new RelayCommand(o => {
+                log.Info("Report Created");
+                tourManager.CreateTourLogsPdf(logs,currentItem);
+
+            });
+
 
             this.CloseWindow = new RelayCommand(o => ((Window)o).Close()
 
@@ -192,7 +212,7 @@ namespace TourPlaner_andreas.ViewModels {
             {   
                 AddLogWindow alw = new AddLogWindow();
                 var result = alw.ShowDialog();
-                if (result == true && alw.date != "" && alw.duration != "" && alw.maxVelocity != "" && alw.minVelocity != "" && alw.avVelocity != "" && alw.date != "" && alw.caloriesBurnt != "")
+                if (result == true && alw.date != "" && alw.duration != "" && alw.maxVelocity != "" && alw.minVelocity != "" && alw.avVelocity != "" && alw.date != "" && alw.caloriesBurnt != "" && alw.author != ""&& alw.comment != "")
                 {
                     
                     var date = DateTime.Parse(alw.date);
@@ -201,7 +221,7 @@ namespace TourPlaner_andreas.ViewModels {
                     int avVel = Convert.ToInt32(alw.avVelocity);
                     int calBurnt = Convert.ToInt32(alw.caloriesBurnt);
                     int dur = Convert.ToInt32(alw.duration);
-                    TourLog genItem = tourManager.CreateItemLog( date, maxVel, minVel, avVel, calBurnt, dur, currentItem);// touritemId?
+                    TourLog genItem = tourManager.CreateItemLog( date, maxVel, minVel, avVel, calBurnt, dur,alw.author,alw.comment,currentItem);// touritemId?
                     log.Info("New Log added to Tour");
                     Logs.Add(genItem);
                 }
@@ -221,6 +241,16 @@ namespace TourPlaner_andreas.ViewModels {
                 logs.Remove(currentLog);
                 log.Info("Log Deleted");
                 
+            });
+            this.SetDbAccess = new RelayCommand(o =>
+            {
+                SetSetting("useFileSystem","false");
+
+            });
+            this.SetFileAccess = new RelayCommand(o =>
+            {
+                SetSetting("useFileSystem", "true");
+
             });
 
 

@@ -12,7 +12,7 @@ namespace TourPlaner_andreas.DAL.DAO
 
         void DeleteById(int logId);
 
-        TourLog AddNewItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, TourItem loggedItem);  //weil im Touritem steht die dazugehörige ID
+        TourLog AddNewItemLog(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, string author, string comment, TourItem loggedItem);  //weil im Touritem steht die dazugehörige ID
 
         IEnumerable<TourLog> GetLogsForTourItem(TourItem item);
 

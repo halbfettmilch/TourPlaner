@@ -36,9 +36,17 @@
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Duration</Label>
             <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Duration" PreviewTextInput="NumberValidationTextBox" MaxLength="10" />
         </DockPanel>
-        
-           
-            <DockPanel DockPanel.Dock="Bottom">
+        <DockPanel DockPanel.Dock="Top">
+            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Author</Label>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Author"  MaxLength="10" />
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Comment</Label>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Comment"  MaxLength="200" />
+        </DockPanel>
+
+
+        <DockPanel DockPanel.Dock="Bottom">
             <Button DockPanel.Dock="right"   VerticalAlignment="Bottom"  HorizontalAlignment="right" Margin="5" Height="50" Width="50" Click="addLog_Click">Add</Button>
             <Button DockPanel.Dock="right"  VerticalAlignment="Bottom" HorizontalAlignment="right" Margin="5" Height="50" Width="50" >Cancel</Button>
             </DockPanel>

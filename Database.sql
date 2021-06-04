@@ -24,6 +24,8 @@ minvelocity INT,
 avvelocity INT,
 caloriesburnt INT,
 duration INT,
+author TEXT,
+comment TEXT,
 touritemid INT
 );
 
@@ -39,4 +41,4 @@ Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration,Description) 
 Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration,Description) values ('5','"lacknergasse-Gsoellnergasse"','"empty"','2002-02-02','50','69','"super"');
 Insert into tours(TourID,Name,Url,CreationTime,TourLength,Duration,Description) values ('6','"Wien-Porto"','"empty"','2001-08-02','50','55','"super"');
 
-Insert into logs(logid,date,maxvelocity,minvelocity,avvelocity,caloriesburnt,duration,touritemid) values ('5','2013-07-01','2','3','4','5','6','1');
+Insert into logs(logid,date,maxvelocity,minvelocity,avvelocity,caloriesburnt,duration,touritemid) values ('5','2013-07-01','2','3','4','5','6','1','"Andreas"','"Super Tour"');
