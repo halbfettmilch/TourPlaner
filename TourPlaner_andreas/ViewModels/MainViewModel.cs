@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
 using TourPlaner_andreas.Commands;
@@ -19,7 +20,9 @@ namespace TourPlaner_andreas.ViewModels {
         private TourLog currentLog;
         private TourFolder folder;
         private string searchName;
-        
+        private string displayedImage = "C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\Pics\\214335.jpg";
+
+
 
         public ICommand SearchCommand { get; set; }
         public ICommand ClearCommand { get; set; }
@@ -103,6 +106,21 @@ namespace TourPlaner_andreas.ViewModels {
             }
         }
 
+        public string DisplayedImage
+        {
+            get { return displayedImage; }
+
+            set
+            {
+                if (displayedImage != value)
+                {
+                    displayedImage = value;
+                    RaisePropertyChangedEvent(nameof(DisplayedImage));
+                }
+
+            }
+        }
+
         public TourLog CurrentLog
         {
             get { return currentLog; }
@@ -120,6 +138,7 @@ namespace TourPlaner_andreas.ViewModels {
                 RaisePropertyChangedEvent(nameof(LogSelected));
             }
         }
+       
 
         public ObservableCollection<TourLog> Logs
         {
@@ -197,12 +216,12 @@ namespace TourPlaner_andreas.ViewModels {
             {
                 AddTourWindow atw = new AddTourWindow();
                 var result = atw.ShowDialog();
-                if (result == true && atw.name != "" && atw.creationTime != "" && atw.length != "" && atw.expectedDuration != "")
+                if (result == true && atw.name != "" && atw.creationTime != "" && atw.length != "" && atw.expectedDuration != "" && atw.fromstart != "" && atw.to != "")
                 {
                     int length = Convert.ToInt32(atw.length);
                     int eDuration = Convert.ToInt32(atw.expectedDuration);
                     
-                    TourItem genItem = tourManager.CreateItem( atw.name, "C:/keinfolder", DateTime.Now, length, eDuration, atw.description);
+                    TourItem genItem = tourManager.CreateItem( atw.name, atw.fromstart,atw.to, DateTime.Now, length, eDuration, atw.description);
                     log.Info("New Tour added");
                     Items.Add(genItem);
                 }
@@ -285,7 +304,8 @@ namespace TourPlaner_andreas.ViewModels {
         {
             CurrentItemInfos = new ObservableCollection<TourItem>();
             CurrentItemInfos.Add(currentItem);
-            
+            DisplayedImage = "C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\Pics\\" + currentItem.TourID + ".jpg";
+            log.Info("pic Updated");
         }
 
 

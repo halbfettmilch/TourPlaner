@@ -18,27 +18,27 @@
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Max Velocity</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="MaxVelocity" PreviewTextInput="NumberValidationTextBox" MaxLength="10" />
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="MaxVelocity" PreviewTextInput="NumberValidationTextBox" MaxLength="8" />
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Min Velocity</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="MinVelocity" PreviewTextInput="NumberValidationTextBox" MaxLength="10"/>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="MinVelocity" PreviewTextInput="NumberValidationTextBox" MaxLength="8"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Av Velocity</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="AvVelocity" PreviewTextInput="NumberValidationTextBox" MaxLength="10"/>
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="AvVelocity" PreviewTextInput="NumberValidationTextBox" MaxLength="8"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Calories burnt</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="CaloriesBurnt" PreviewTextInput="NumberValidationTextBox" MaxLength="10" />
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="CaloriesBurnt" PreviewTextInput="NumberValidationTextBox" MaxLength="8" />
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Duration</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Duration" PreviewTextInput="NumberValidationTextBox" MaxLength="10" />
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Duration" PreviewTextInput="NumberValidationTextBox" MaxLength="8" />
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Author</Label>
-            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Author"  MaxLength="10" />
+            <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Author"  MaxLength="50" />
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Comment</Label>

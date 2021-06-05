@@ -21,6 +21,8 @@ namespace TourPlaner_andreas.Views
     public partial class AddTourWindow : Window
     {
         public string name;
+        public string fromstart;
+        public string to;
         public string creationTime;
         public string length;
         public string expectedDuration;
@@ -32,6 +34,8 @@ namespace TourPlaner_andreas.Views
         private void addTour_Click(object sender, EventArgs e)
         {
             name = Name.Text.ToString();
+            fromstart = Fromstart.Text.ToString();
+            to = To.Text.ToString();
             length = Length.Text.ToString();
             expectedDuration = Expected_Duration.Text.ToString();
             description = Description.ToString();

@@ -81,14 +81,16 @@
                     </Grid.RowDefinitions>
                     <TabControl Grid.Row="0" Margin="5">
                         <TabItem Header="Route">
-                            <Image Width="320" Height="200"/>
+                            <Image Width="320" Height="200"  Source="{Binding DisplayedImage}"/>
                         </TabItem>
-                       <TabItem Header="Description">
+                        <TabItem Header="Description">
                             <DockPanel Name="RouteData">
                                 <DataGrid DockPanel.Dock="Top" AutoGenerateColumns="False" ItemsSource="{Binding CurrentItemInfos}">
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="ID" Binding="{Binding TourID}"/>
                                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Header="From" Binding="{Binding Fromstart}"/>
+                                    <DataGridTextColumn Header="To" Binding="{Binding To}"/>
                                         <DataGridTextColumn Header="CreationTime" Binding="{Binding CreationTime}"/>
                                         <DataGridTextColumn Header="Length" Binding="{Binding TourLength}"/>
                                         <DataGridTextColumn Header="Expected duration" Binding="{Binding Duration}"/>
@@ -108,6 +110,8 @@
                             <DataGridTextColumn Header="av. velocity" Binding="{Binding AvVelocity}"/>
                             <DataGridTextColumn Header="Calories burnt" Binding="{Binding CaloriesBurnt}"/>
                             <DataGridTextColumn Header="Duration" Binding="{Binding Duration}"/>
+                            <DataGridTextColumn Header="Author" Binding="{Binding Author}"/>
+                            <DataGridTextColumn Header="Comment" Binding="{Binding Comment}"/>
                         </DataGrid.Columns>
                         
                     </DataGrid>

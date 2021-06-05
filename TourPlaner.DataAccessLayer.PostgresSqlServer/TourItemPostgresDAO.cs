@@ -16,7 +16,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
         private IDatabase database;
         private const string SQL_FIND_BY_ID = "SELECT * from  public.\"tours\" WHERE \"tourid\"=@tourid;";
         private const string SQL_GET_ALL_ITEMS = "SELECT * from  public.\"tours\";";
-        private const string SQL_INSERT_NEW_ITEM = "INSERT INTO public.\"tours\" (\"tourid\", \"name\", \"url\",\"creationtime\",\"tourlength\",\"duration\",\"description\") VALUES (@TourId,@name,@url,@CreationTime,@TourLength,@Duration,@description) RETURNING \"tourid\";";
+        private const string SQL_INSERT_NEW_ITEM = "INSERT INTO public.\"tours\" (\"tourid\", \"name\", \"fromstart\",\"too\",\"creationtime\",\"tourlength\",\"duration\",\"description\") VALUES (@TourId,@name,@fromstart,@too,@CreationTime,@TourLength,@Duration,@description) RETURNING \"tourid\";";
         private const string SQL_DELETE_TOUR = "DELETE from public.\"tours\" WHERE \"tourid\"=@tourid;"; //work in Progress
         public TourItemPostgresDAO()
         {
@@ -26,7 +26,7 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
 
         
 
-        public TourItem AddNewItem(int tourId,string name, string url, DateTime creationTime, int tourLength, int duration, string description)
+        public TourItem AddNewItem(int tourId,string name, string fromstart,string to, DateTime creationTime, int tourLength, int duration, string description)
         {
             if (FindById(tourId) != null)
             {
@@ -35,7 +35,8 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
             DbCommand insertCommand = database.createCommand(SQL_INSERT_NEW_ITEM);
             database.DefineParameter(insertCommand, "@tourid",DbType.Int32, tourId);
             database.DefineParameter(insertCommand, "@name", DbType.String, name);
-            database.DefineParameter(insertCommand, "@url", DbType.String, url);
+            database.DefineParameter(insertCommand, "@fromstart", DbType.String, fromstart);
+            database.DefineParameter(insertCommand, "@too", DbType.String, to);
             database.DefineParameter(insertCommand, "@creationtime", DbType.Date, creationTime);
             database.DefineParameter(insertCommand, "@tourlength", DbType.Int32, tourLength);
             database.DefineParameter(insertCommand, "@duration", DbType.Int32, duration);
@@ -76,7 +77,8 @@ namespace TourPlaner.DataAccessLayer.PostgresSqlServer
                     tourItemList.Add(new TourItem(
                         (int)reader["tourid"],
                         (string)reader["name"],
-                        (string)reader["url"],
+                        (string)reader["fromstart"],
+                        (string)reader["too"],
                         DateTime.Parse(reader["creationtime"].ToString()),
                         (int)reader["tourlength"],
                         (int)reader["duration"],

@@ -7,7 +7,8 @@ namespace TourPlaner_andreas.Models
    
     {   public int TourID { get; set; }
         public string Name { get; set; }
-        public string Url { get; set; }
+        public string Fromstart { get; set; }
+        public string To { get; set; }
         public DateTime CreationTime { get; set; }
         public int TourLength { get; set; }
         public int Duration { get; set; }
@@ -16,11 +17,12 @@ namespace TourPlaner_andreas.Models
 
 
 
-        public TourItem(int id, string name, string url, DateTime creationTime, int tourLength, int duration, string description)
+        public TourItem(int id, string name, string fromstart,string to, DateTime creationTime, int tourLength, int duration, string description)
         {
             this.TourID = id;
             this.Name = name;
-            this.Url = url;
+            this.Fromstart = fromstart;
+            this.To = to;
             this.CreationTime = creationTime;
             this.TourLength = tourLength;
             this.Duration = duration;

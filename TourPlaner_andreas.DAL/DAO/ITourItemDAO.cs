@@ -11,7 +11,7 @@ namespace TourPlaner_andreas.DAL.DAO
 
         void DeleteById(int itemID);
 
-        TourItem AddNewItem(int tourId, string name, string url, DateTime creationTime, int tourLength, int duration, string description);
+        TourItem AddNewItem(int tourId, string name, string fromstart,string to, DateTime creationTime, int tourLength, int duration, string description);
 
         IEnumerable<TourItem> GetItems(TourFolder folder);
     }

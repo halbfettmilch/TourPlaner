@@ -26,7 +26,12 @@ namespace TourPlaner_andreas.ViewModels {
                 throw new ArgumentException("Invalid propery name: " + propertyName);
                
             }
-           
+            
+        }
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            Debug.Print($"propertyChanged \"{propertyName}\"");
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

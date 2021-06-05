@@ -14,6 +14,9 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Image = System.Drawing.Image;
 
 
 namespace TourPlaner_andreas.BL {
@@ -68,18 +71,20 @@ namespace TourPlaner_andreas.BL {
             return logToReturn;
         }
 
-        public TourItem CreateItem( string name, string url, DateTime creationTime, int tourLength, int duration, string description)
+        public TourItem CreateItem( string name, string fromstart, string to, DateTime creationTime, int tourLength, int duration, string description)
         {
-            AppManagerWebApi mapi = new AppManagerWebApi();
-            mapi.getApiConnection();
-            Random rnd = new Random();
+
+           
+             //_____________________________________________________
+             Random rnd = new Random();
             ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
             TourItem itemToReturn=null;
             do
             {
                 int id = rnd.Next(999999);
-                itemToReturn = tourItemDAO.AddNewItem(id, name, url, creationTime, tourLength, duration, description);
+                itemToReturn = tourItemDAO.AddNewItem(id, name, fromstart, to, creationTime, tourLength, duration, description);
             } while (itemToReturn == null);
+            getApiAsync(itemToReturn);
             return itemToReturn;
         }
         public void DeleteTourWithId(TourItem touritem)
@@ -266,15 +271,24 @@ namespace TourPlaner_andreas.BL {
             document.Close();
         }
 
-        public void getApi()
+        private async System.Threading.Tasks.Task getApiAsync(TourItem item)
         {
             AppManagerWebApi mapi = new AppManagerWebApi();
-            mapi.getApiConnection();
+            string responseBody = await mapi.getApiRoute();
+            var data = (JObject)JsonConvert.DeserializeObject(responseBody);
+            JObject route = data["route"].Value<JObject>();
+            string sessionId = route["sessionId"].Value<string>();
+            JObject boundingBox = route["boundingBox"].Value<JObject>();
+            mapi.getApiImage(sessionId, boundingBox,item.TourID);
         }
-       
 
+        public Image GetImage(int id)
+        {
+            return System.Drawing.Image.FromFile("C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\" + id + ".jpg");
+        }
 
     }
+
 
         
     
