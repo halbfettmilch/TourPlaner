@@ -31,13 +31,13 @@
                         </b:Interaction.Triggers>
                     </MenuItem>
                     <MenuItem Header="Delete Tour" Command="{Binding DelTourCommand}" IsEnabled="{Binding TourSelected}"/>
-                    <MenuItem Header="Import Tour"/>
+                    <MenuItem Header="Import Tour"  Command="{Binding ImportFile}"/>
                     <MenuItem Header="Export Tour" IsEnabled="{Binding TourSelected}" Command="{Binding ExportFile}"/>
                     <MenuItem Header="Export Tour Report" IsEnabled="{Binding TourSelected}" Command="{Binding PrintPdf}"/>
                     <MenuItem Header="Export Tour+Logs Report" IsEnabled="{Binding TourSelected}" Command="{Binding PrintAllPdf}"/>
                 </MenuItem>
                 <MenuItem Header="_Logs">
-                    <MenuItem Header="Add Log" Command="{Binding AddLogCommand}"/>
+                    <MenuItem Header="Add Log" IsEnabled="{Binding TourSelected}" Command="{Binding AddLogCommand}"/>
                     <MenuItem Header="Delete Log" Command="{Binding DelLogCommand}" IsEnabled="{Binding LogSelected}"/>
                 </MenuItem>
 

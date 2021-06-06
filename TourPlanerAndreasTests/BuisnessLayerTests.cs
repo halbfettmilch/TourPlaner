@@ -6,7 +6,7 @@ using TourPlaner_andreas.Models;
 
 namespace TourPlanerAndreasTests
 {
-    public class ReportTests
+    public class BuisnessLayerTests
     {
         private static readonly TourItem tourItem1 = new(5, "correct", "Wien", "Bratislava", DateTime.Now, 5, 4,
             "nice tour");
@@ -29,11 +29,11 @@ namespace TourPlanerAndreasTests
 
 
         [Test]
-        public void ReportWorks()
+        public void getManagerTest()
         {
-            var manager = AppManagerFactory.GetFactoryManager();
-            var check = manager.CreateTourPdf(tourItem1);
-            Assert.AreEqual(true, check);
+           
+            IAppManager testmanager= AppManagerFactory.GetFactoryManager();
+            Assert.AreEqual(testmanager, manager);
         }
 
         [Test]

@@ -17,15 +17,15 @@
                         Name="Date"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
-            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Max Velocity</Label>
+            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Max Velocity(km/h)</Label>
             <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="MaxVelocity" PreviewTextInput="NumberValidationTextBox" MaxLength="8" />
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
-            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Min Velocity</Label>
+            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Min Velocity(km/h)</Label>
             <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="MinVelocity" PreviewTextInput="NumberValidationTextBox" MaxLength="8"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
-            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Av Velocity</Label>
+            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Av Velocity(km/h)</Label>
             <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="AvVelocity" PreviewTextInput="NumberValidationTextBox" MaxLength="8"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
@@ -33,7 +33,7 @@
             <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="CaloriesBurnt" PreviewTextInput="NumberValidationTextBox" MaxLength="8" />
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">
-            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Duration</Label>
+            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Duration(min)</Label>
             <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Duration" PreviewTextInput="NumberValidationTextBox" MaxLength="8" />
         </DockPanel>
         <DockPanel DockPanel.Dock="Top">

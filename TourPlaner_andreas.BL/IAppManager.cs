@@ -17,7 +17,7 @@ namespace TourPlaner_andreas.BL {
         public void DeleteTourWithId(TourItem touritem);
         public void DeleteLogWithId(TourLog logItem);
         public Image GetImage(int tourId);
-        public int ExportFile(ObservableCollection<TourLog> tourLogs,TourItem item);
-        public TourItem ImportFile(TourItem item);
+        public int ExportFile(ObservableCollection<TourLog> tourLogs,TourItem item,string path);
+        public TourItem ImportFile(string path);
     }
 }

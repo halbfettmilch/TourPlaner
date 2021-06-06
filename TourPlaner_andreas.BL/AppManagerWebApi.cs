@@ -1,87 +1,78 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using TourPlaner_andreas.Models;
 
 namespace TourPlaner_andreas.BL
 {
     public class AppManagerWebApi
     {
-       
         public async Task<string> getApiRoute(TourItem item)
         {
-          
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://www.mapquestapi.com/directions/v2/");
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("http://www.mapquestapi.com/directions/v2/");
 
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = client.GetAsync("route?key=VrUZ28kkdvGNfMj8GSE1jEKBGpJGfhzV&from="+item.Fromstart+"&to="+item.To).Result;  
-                if (response.IsSuccessStatusCode)
-                {
+            var response = client
+                .GetAsync("route?key=VrUZ28kkdvGNfMj8GSE1jEKBGpJGfhzV&from=" + item.Fromstart + "&to=" + item.To)
+                .Result;
+            if (response.IsSuccessStatusCode)
+            {
                 response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
+                var responseBody = await response.Content.ReadAsStringAsync();
                 //JObject json = JObject.Parse(responseBody);
-               // Debug.WriteLine(responseBody);
-              
+                // Debug.WriteLine(responseBody);
+
                 return responseBody;
-                }
-                else
-                {
-                    Debug.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-                }
-               
+            }
+
+            Debug.WriteLine("{0} ({1})", (int) response.StatusCode, response.ReasonPhrase);
+
 
             client.Dispose();
             return null;
-
         }
-        public async Task getApiImage(string sessionId,JObject boundingBox, int id)
+
+        public async Task getApiImage(string sessionId, JObject boundingBox, int id)
         {
-           
-            JObject lr = boundingBox["lr"].Value<JObject>();
-            string lr_lng = lr["lng"].Value<string>();
-            string lr_lat = lr["lat"].Value<string>();
-            JObject ul = boundingBox["ul"].Value<JObject>();
-            string ul_lng = ul["lng"].Value<string>();
-            string ul_lat = ul["lat"].Value<string>();
-            string paramss = "&size=700,300";
-                paramss += "&defaultMarker=none";
-                paramss += "&zoom=11";
-                paramss += "&rand=737758036";
-                paramss += "&session=" + sessionId;
-            string box = lr_lat + "," + lr_lng + "," + ul_lat + "," + ul_lng;
-                paramss += "&boundingBox=" + box;
-            HttpClient client = new HttpClient();
+            var lr = boundingBox["lr"].Value<JObject>();
+            var lr_lng = lr["lng"].Value<string>();
+            var lr_lat = lr["lat"].Value<string>();
+            var ul = boundingBox["ul"].Value<JObject>();
+            var ul_lng = ul["lng"].Value<string>();
+            var ul_lat = ul["lat"].Value<string>();
+            var paramss = "&size=700,300";
+            paramss += "&defaultMarker=none";
+            paramss += "&zoom=11";
+            paramss += "&rand=737758036";
+            paramss += "&session=" + sessionId;
+            var box = lr_lat + "," + lr_lng + "," + ul_lat + "," + ul_lng;
+            paramss += "&boundingBox=" + box;
+            var client = new HttpClient();
             client.BaseAddress = new Uri("http://www.mapquestapi.com/staticmap/v5/");
 
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            
-            byte[] response = await client.GetByteArrayAsync("map?key=VrUZ28kkdvGNfMj8GSE1jEKBGpJGfhzV" + paramss);
-            MemoryStream ms = new MemoryStream(response);
-            Image img = Image.FromStream(ms);
-           
 
-           img.Save( "C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\Pics\\"+id+".jpg", ImageFormat.Jpeg);
-           
+            var response = await client.GetByteArrayAsync("map?key=VrUZ28kkdvGNfMj8GSE1jEKBGpJGfhzV" + paramss);
+            var ms = new MemoryStream(response);
+            var img = Image.FromStream(ms);
 
-           client.Dispose();
 
+            img.Save("C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\Pics\\" + id + ".jpg",
+                ImageFormat.Jpeg);
+
+
+            client.Dispose();
         }
     }
 }
-

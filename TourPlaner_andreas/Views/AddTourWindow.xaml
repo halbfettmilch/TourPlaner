@@ -22,11 +22,11 @@
        </DockPanel>
 
         <DockPanel DockPanel.Dock="Top">
-            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Length</Label>
+            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Length(km)</Label>
             <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Length" PreviewTextInput="NumberValidationTextBox" MaxLength="8"/>
        </DockPanel>
        <DockPanel DockPanel.Dock="Top">
-            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Expected Duration</Label>
+            <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Margin="5" Width="100" >Exp. Duration(min)</Label>
             <TextBox DockPanel.Dock="Left" HorizontalAlignment="Stretch" Margin="5" Name="Expected_Duration" PreviewTextInput="NumberValidationTextBox" MaxLength="8"/>
        </DockPanel>
        <DockPanel DockPanel.Dock="Top">

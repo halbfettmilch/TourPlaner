@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using log4net;
 using TourPlaner_andreas.DAL.common;
 using TourPlaner_andreas.Models;
 
@@ -13,7 +16,7 @@ namespace TourPlaner.DataAcessLayer.FileAccess
 {
     public class FileAccess : IFileAccess
     {
-
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private string filePath;
        
 
@@ -30,69 +33,64 @@ namespace TourPlaner.DataAcessLayer.FileAccess
 
         private string GetFullPath(string fileName)
         {
-            return Path.GetFullPath(filePath,fileName);
+            return "C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\TourFiles\\" + fileName;
 
         }
-        public int CreateNewTourItemFile(int tourId, string name, string fromstart,string to, DateTime creationTime, int tourLength, int duration, string description)
+        public bool CreateTourItemLog(ObservableCollection<TourLog> Logs, TourItem item,string path)
         {
-            int id = Guid.NewGuid().GetHashCode();
-            string fileName = id + "_TourItem.txt";
-            string path = GetFullPath(fileName);
-
-            using (StreamWriter writer = File.CreateText(path))
+            var id = Guid.NewGuid().GetHashCode();
+            var fileName = item.TourID + "_TourItem.txt";
+           // var path = GetFullPath(fileName);
+            try
             {
-                writer.WriteLine(tourId);  
-                writer.WriteLine(name); 
-                writer.WriteLine(fromstart);
-                writer.WriteLine(to);
-                writer.WriteLine(creationTime);
-                writer.WriteLine(tourLength);
-                writer.WriteLine(duration);
-                writer.WriteLine(description);
+                if (item.Name != "\"\"" && item.CreationTime.ToString() != "\"\"" &&
+                    item.Fromstart != "\"\"" && item.To != "\"\"" && item.TourLength.ToString() != "\"\"" &&
+                    item.Duration.ToString() != "\"\"" && item.Description != "\"\"")
+                {
+                    using (var writer = File.CreateText(path))
+                    {
+                        writer.WriteLine(item.TourID);
+                        writer.WriteLine(item.Name);
+                        writer.WriteLine(item.Fromstart);
+                        writer.WriteLine(item.To);
+                        writer.WriteLine(item.CreationTime);
+                        writer.WriteLine(item.TourLength);
+                        writer.WriteLine(item.Duration);
+                        writer.WriteLine(item.Description);
+                        foreach (var log in Logs)
+                        {
+                            writer.WriteLine(log.LogId);
+                            writer.WriteLine(log.Date);
+                            writer.WriteLine(log.MinVelocity);
+                            writer.WriteLine(log.MinVelocity);
+                            writer.WriteLine(log.AvVelocity);
+                            writer.WriteLine(log.CaloriesBurnt);
+                            writer.WriteLine(log.Duration);
+                            writer.WriteLine(log.Author);
+                            writer.WriteLine(log.Comment);
+                            writer.WriteLine(log.LogTourItem.TourID);
+                        }
+
+
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Some Value of " + item.Name + " are empty");
+                }
             }
-
-            return id;
-        }
-
-        public int CreateNewTourLogFile(int logId, DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration,string author,string comment, TourItem loggedItem)
-        {
-
-            int id = Guid.NewGuid().GetHashCode();
-            string fileName = id + "_TourLog.txt";
-            string path = GetFullPath(fileName);
-
-            using (StreamWriter writer = File.CreateText(path))
+            catch (Exception ex)
             {
-                writer.WriteLine(logId);
-                writer.WriteLine(date);
-                writer.WriteLine(maxVelocity);
-                writer.WriteLine(minVelocity);
-                writer.WriteLine(avVelocity);
-                writer.WriteLine(caloriesBurnt);
-                writer.WriteLine(duration);
-                writer.WriteLine(author);
-                writer.WriteLine(comment);
-                writer.WriteLine(loggedItem.TourID);
-               
+
+                log.Error(ex.Message);
+                return false;
             }
-
-            return id;
+            return true;
         }
 
-        public IEnumerable<FileInfo> GetAllFiles(FileTypes searchType)
+        public string[] ImportFile(string path)
         {
-            return getFileInfos(filePath, searchType);
-        }
-
-        public IEnumerable<FileInfo> SearchFiles(string searchTerm, FileTypes searchType)
-        {
-            IEnumerable<FileInfo> fileList = getFileInfos(filePath, searchType);
-            IEnumerable<FileInfo> queryMatchingFiles= 
-                from file in fileList
-                let fileText = GetFileText(file) 
-                where fileText.Contains(searchTerm) 
-                select file;
-            return queryMatchingFiles;
+            return System.IO.File.ReadAllLines(path);
         }
 
         string GetFileText(FileInfo file)
