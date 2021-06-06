@@ -12,13 +12,14 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
+using TourPlaner_andreas.Models;
 
 namespace TourPlaner_andreas.BL
 {
     public class AppManagerWebApi
     {
        
-        public async Task<string> getApiRoute()
+        public async Task<string> getApiRoute(TourItem item)
         {
           
                 HttpClient client = new HttpClient();
@@ -27,7 +28,7 @@ namespace TourPlaner_andreas.BL
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = client.GetAsync("route?key=VrUZ28kkdvGNfMj8GSE1jEKBGpJGfhzV&from=wien&to=linz").Result;  
+                HttpResponseMessage response = client.GetAsync("route?key=VrUZ28kkdvGNfMj8GSE1jEKBGpJGfhzV&from="+item.Fromstart+"&to="+item.To).Result;  
                 if (response.IsSuccessStatusCode)
                 {
                 response.EnsureSuccessStatusCode();

@@ -32,7 +32,7 @@
                     </MenuItem>
                     <MenuItem Header="Delete Tour" Command="{Binding DelTourCommand}" IsEnabled="{Binding TourSelected}"/>
                     <MenuItem Header="Import Tour"/>
-                    <MenuItem Header="Export Tour" IsEnabled="{Binding TourSelected}"/>
+                    <MenuItem Header="Export Tour" IsEnabled="{Binding TourSelected}" Command="{Binding ExportFile}"/>
                     <MenuItem Header="Export Tour Report" IsEnabled="{Binding TourSelected}" Command="{Binding PrintPdf}"/>
                     <MenuItem Header="Export Tour+Logs Report" IsEnabled="{Binding TourSelected}" Command="{Binding PrintAllPdf}"/>
                 </MenuItem>

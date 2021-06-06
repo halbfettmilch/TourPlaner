@@ -1,53 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Text.RegularExpressions;
+
 namespace TourPlaner_andreas.Views
 {
     /// <summary>
-    /// Interaction logic for AddTourWindow.xaml
+    ///     Interaction logic for AddTourWindow.xaml
     /// </summary>
     public partial class AddTourWindow : Window
     {
-        public string name;
-        public string fromstart;
-        public string to;
         public string creationTime;
-        public string length;
-        public string expectedDuration;
         public string description;
+        public string expectedDuration;
+        public string fromstart;
+        public string length;
+        public string name;
+        public string to;
+
         public AddTourWindow()
         {
             InitializeComponent();
         }
+
         private void addTour_Click(object sender, EventArgs e)
         {
-            name = Name.Text.ToString();
-            fromstart = Fromstart.Text.ToString();
-            to = To.Text.ToString();
-            length = Length.Text.ToString();
-            expectedDuration = Expected_Duration.Text.ToString();
+            name = Name.Text;
+            fromstart = Fromstart.Text;
+            to = To.Text;
+            length = Length.Text;
+            expectedDuration = Expected_Duration.Text;
             description = Description.ToString();
             DialogResult = true;
             Close();
         }
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
+            var regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-
-
     }
 }

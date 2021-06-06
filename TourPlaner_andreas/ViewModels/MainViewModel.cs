@@ -30,6 +30,7 @@ namespace TourPlaner_andreas.ViewModels {
         public ICommand DelTourCommand { get; set; }
         public ICommand AddLogCommand { get; set; }
         public ICommand DelLogCommand { get; set; }
+        public ICommand ExportFile { get; set; }
         public ICommand PrintPdf { get; set; }
         public ICommand PrintAllPdf { get; set; }
         public ICommand CloseWindow { get; set; }
@@ -116,6 +117,7 @@ namespace TourPlaner_andreas.ViewModels {
                 {
                     displayedImage = value;
                     RaisePropertyChangedEvent(nameof(DisplayedImage));
+                    log.Info("Image displayed");
                 }
 
             }
@@ -196,13 +198,18 @@ namespace TourPlaner_andreas.ViewModels {
 
                 FillTourListView();
             });
+            this.ExportFile = new RelayCommand(o => {
+                log.Info("File Exported");
+                tourManager.ExportFile(Logs,currentItem);
+
+            });
             this.PrintPdf = new RelayCommand(o => {
                 log.Info("Report Created");
                 tourManager.CreateTourPdf(currentItem);
                
             });
             this.PrintAllPdf = new RelayCommand(o => {
-                log.Info("Report Created");
+                log.Info("Report for all Created");
                 tourManager.CreateTourLogsPdf(logs,currentItem);
 
             });

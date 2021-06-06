@@ -36,7 +36,7 @@ namespace TourPlaner.DataAcessLayer.FileAccess
         public int CreateNewTourItemFile(int tourId, string name, string fromstart,string to, DateTime creationTime, int tourLength, int duration, string description)
         {
             int id = Guid.NewGuid().GetHashCode();
-            string fileName = id + "_TourITem.txt";
+            string fileName = id + "_TourItem.txt";
             string path = GetFullPath(fileName);
 
             using (StreamWriter writer = File.CreateText(path))

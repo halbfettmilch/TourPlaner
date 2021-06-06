@@ -12,10 +12,12 @@ namespace TourPlaner_andreas.BL {
         IEnumerable<TourLog> GetLogsForTourItem( TourItem tour);
         TourLog CreateItemLog(DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt, int duration, string author, string comment, TourItem loggedItem);
         TourItem CreateItem( string name, string fromstart,string to, DateTime creationTime, int tourLength, int duration, string description);
-        public void CreateTourPdf(TourItem tourItem);
-        public void CreateTourLogsPdf(ObservableCollection<TourLog> tourLogs, TourItem tourItem);
+        public bool CreateTourPdf(TourItem tourItem);
+        public bool CreateTourLogsPdf(ObservableCollection<TourLog> tourLogs, TourItem tourItem);
         public void DeleteTourWithId(TourItem touritem);
         public void DeleteLogWithId(TourLog logItem);
         public Image GetImage(int tourId);
+        public int ExportFile(ObservableCollection<TourLog> tourLogs,TourItem item);
+        public TourItem ImportFile(TourItem item);
     }
 }

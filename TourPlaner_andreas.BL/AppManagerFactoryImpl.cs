@@ -16,6 +16,7 @@ using iText.Layout.Element;
 using iText.Layout.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TourPlaner.DataAcessLayer.FileAccess;
 using Image = System.Drawing.Image;
 
 
@@ -24,17 +25,15 @@ namespace TourPlaner_andreas.BL {
     {
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        private FileAccess access = new FileAccess("C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\TourFiles\\");
         public IEnumerable<TourItem> GetItems(TourFolder folder)
         {
             ITourItemDAO tourItemDAO = DALFactory.CreateTourItemDAO();
             return tourItemDAO.GetItems(folder);
-            
-
         }
-
+       
         public TourFolder GetTourFolder(string url)
-        {
+        {   
             // usally located somewhere on the disk
             return new TourFolder();
         }
@@ -98,11 +97,13 @@ namespace TourPlaner_andreas.BL {
             tourLogDao.DeleteById(tourLog.LogId);
         }
 
-        public void CreateTourPdf(TourItem tourItem)
+         public bool CreateTourPdf(TourItem tourItem)
         {
             
             try
-            {   if(tourItem.Name != "" && tourItem.CreationTime.ToString() != "" && tourItem.TourLength.ToString() != "" && tourItem.Duration.ToString() != "" && tourItem.Description != "") { 
+            {
+                if (tourItem.Name != "\"\"" && tourItem.CreationTime.ToString() != "\"\"" && tourItem.Fromstart != "\"\"" && tourItem.To != "\"\"" && tourItem.TourLength.ToString() != "\"\"" && tourItem.Duration.ToString() != "\"\"" && tourItem.Description != "\"\"")
+                { 
                 
                 PdfWriter writer = new PdfWriter("Reports.pdf");
                 PdfDocument pdf = new PdfDocument(writer);
@@ -146,17 +147,22 @@ namespace TourPlaner_andreas.BL {
 
                 document.Close();
             }
+
+               
                 else
                 {
                     throw new ArgumentException("Tour length or Expected Duration of "+ tourItem.Name +" in not in the right Format");
                 }
             }
             catch (Exception ex)
-            {
+            {   
                 log.Error(ex.Message);
+                return false;
             }
+
+            return true;
         }
-        public void CreateTourLogsPdf(ObservableCollection<TourLog> tourLogs, TourItem tourItem)
+        public bool CreateTourLogsPdf(ObservableCollection<TourLog> tourLogs, TourItem tourItem)
         {
             PdfWriter writer = new PdfWriter("Reports.pdf");
             PdfDocument pdf = new PdfDocument(writer);
@@ -164,8 +170,8 @@ namespace TourPlaner_andreas.BL {
             
             try
             {
-                
-                if (tourItem.Name!="" && tourItem.CreationTime.ToString()!="" && tourItem.TourLength.ToString()!="" && tourItem.Duration.ToString()!="" && tourItem.Description!="")
+
+                if (tourItem.Name != "\"\"" && tourItem.CreationTime.ToString() != "\"\"" && tourItem.Fromstart != "\"\"" && tourItem.To != "\"\"" && tourItem.TourLength.ToString() != "\"\"" && tourItem.Duration.ToString() != "\"\"" && tourItem.Description != "\"\"")
                 {
 
                    
@@ -207,20 +213,21 @@ namespace TourPlaner_andreas.BL {
                 }
                 else
                 {
-                    throw new ArgumentException("Some Value of " + tourItem.Name + " is empty");
-
+                    throw new NullReferenceException("Some Value of " + tourItem.Name + " is empty");
                 }
             }
             catch (Exception ex)
             {
+                document.Close();
                 log.Error(ex.Message);
+                return false;
             }
 
             foreach (TourLog tourLog in tourLogs)
             {
                 try
                 {
-                    if (tourLog.LogId.ToString()!=""&& tourLog.Date.ToString()!="" && tourLog.MaxVelocity.ToString()!=""&& tourLog.MinVelocity.ToString()!="" && tourLog.AvVelocity.ToString()!=""&& tourLog.CaloriesBurnt.ToString()!="" && tourLog.Duration.ToString()!="" && tourLog.Author!=""&& tourLog.Comment!="")
+                    if (tourLog.LogId.ToString() != "\"\"" && tourLog.Date.ToString() != "\"\"" && tourLog.MaxVelocity.ToString() != "\"\"" && tourLog.MinVelocity.ToString() != "\"\"" && tourLog.AvVelocity.ToString() != "\"\"" && tourLog.CaloriesBurnt.ToString() != "\"\"" && tourLog.Duration.ToString() != "\"\"" && tourLog.Author != "\"\"" && tourLog.Comment != "\"\"")
                     {
                         Paragraph tmplog1 = new Paragraph("LogID: " + tourLog.LogId.ToString())
                             .SetFontSize(20);
@@ -254,27 +261,32 @@ namespace TourPlaner_andreas.BL {
                         document.Add(tmplog8);
                         document.Add(tmplog9);
                         document.Add(lines);
+
+                      
                     }
                     else
                     {
-                        throw new ArgumentException("Some Value of Log with ID: " + tourLog.LogId + " is empty");
+                        throw new NullReferenceException("Some Value of Log with ID: " + tourLog.LogId + " is empty");
                     }
                 }
                 catch (Exception ex)
                 {
+                    document.Close();
                     log.Error(ex.Message);
+                    return false;
                 }
             }
 
 
 
             document.Close();
+            return true;
         }
 
         private async System.Threading.Tasks.Task getApiAsync(TourItem item)
         {
             AppManagerWebApi mapi = new AppManagerWebApi();
-            string responseBody = await mapi.getApiRoute();
+            string responseBody = await mapi.getApiRoute(item);
             var data = (JObject)JsonConvert.DeserializeObject(responseBody);
             JObject route = data["route"].Value<JObject>();
             string sessionId = route["sessionId"].Value<string>();
@@ -284,7 +296,25 @@ namespace TourPlaner_andreas.BL {
 
         public Image GetImage(int id)
         {
-            return System.Drawing.Image.FromFile("C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\" + id + ".jpg");
+            return System.Drawing.Image.FromFile("C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\TourPics\\" + id + ".jpg");
+        }
+
+        public int ExportFile(ObservableCollection<TourLog> tourLogs,TourItem item)
+        {
+            int itemId=access.CreateNewTourItemFile(item.TourID, item.Name, item.Fromstart, item.To, item.CreationTime,
+                item.TourLength, item.Duration, item.Description);
+            foreach (TourLog tourLog in tourLogs)
+            {   
+                access.CreateNewTourLogFile(tourLog.LogId, tourLog.Date, tourLog.MaxVelocity, tourLog.MinVelocity,
+                    tourLog.AvVelocity, tourLog.CaloriesBurnt, tourLog.Duration, tourLog.Author, tourLog.Comment,
+                    tourLog.LogTourItem);
+            }
+            return itemId;
+        }
+        public TourItem ImportFile(TourItem item)
+        {
+           
+            return null;
         }
 
     }
