@@ -11,9 +11,7 @@ namespace TourPlanerAndreasTests
 {
     public class BuissnessLayerTests
     {
-        private IAppManager manager;
-        private static readonly TourItem tourItem1 = new(5, "correct", "Wien", "Bratislava", DateTime.Now, 5, 4,
-            "nice tour");
+     
 
         private static readonly TourItem tourItem2 = new(2, "Some Value Empty", "Wien", "\"\"", DateTime.Now, 5, 4, "");
 

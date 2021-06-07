@@ -16,9 +16,8 @@ namespace TourPlanerAndreasTests
         private static readonly TourLog logItem1 = new(5, DateTime.Now, 5, 5, 5, 5, 5, "andi", "comment", tourItem1);
         private static readonly TourLog logItem2 = new(6, DateTime.Now, 5, 5, 5, 5, 5, "\"\"", "\"\"", tourItem1);
         private static readonly TourLog logItem3 = new(7, DateTime.Now, 5, 5, 5, 5, 5, "andi", "comment", tourItem2);
-        private static TourLog logItem4 = new(8, DateTime.Now, 5, 5, 5, 5, 5, "", "\"\"", tourItem3);
         public ObservableCollection<TourLog> logs;
-        private IAppManager manager;
+      
 
         [SetUp]
         public void Setup()

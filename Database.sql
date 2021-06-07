@@ -33,42 +33,7 @@ touritemid INT
 ALTER TABLE logs ADD FOREIGN KEY ("touritemid")
 REFERENCES tours ("tourid") ON DELETE CASCADE;
 
---Insert statments for testing
 
--- Drop the Database
-
-DROP TABLE tours CASCADE;
-DROP TABLE logs CASCADE;
-
---Creating Tables
-
-Create TABLE IF NOT EXISTS tours(
-tourid INT PRIMARY KEY,
-name TEXT,
-fromstart TEXT,
-to TEXT,
-creationtime DATE,
-tourlength INT,
-duration INT,
-description TEXT
-
-);
-
-Create Table IF NOT EXISTS logs(
-logid INT PRIMARY KEY,
-date DATE,
-maxvelocity INT,
-minvelocity INT,
-avvelocity INT,
-caloriesburnt INT,
-duration INT,
-author TEXT,
-commentt TEXT,
-touritemid INT
-);
-
-ALTER TABLE logs ADD FOREIGN KEY ("touritemid")
-REFERENCES tours ("tourid") ON DELETE CASCADE;
 
 --Insert statments for testing
 
