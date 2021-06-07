@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -55,42 +56,94 @@ namespace TourPlaner_andreas.BL
         public TourLog CreateItemLog(DateTime date, int maxVelocity, int minVelocity, int avVelocity, int caloriesBurnt,
             int duration, string author, string comment, TourItem loggedItem)
         {
-            var rnd = new Random();
-            var tourLogDAO = DALFactory.CreateTourLogDAO();
-            TourLog logToReturn = null;
-            do
+            try
             {
-                var logID = rnd.Next(999999);
-                logToReturn = tourLogDAO.AddNewItemLog(logID, date, maxVelocity, minVelocity, avVelocity, caloriesBurnt,
-                    duration, author, comment, loggedItem);
-            } while (logToReturn == null);
+                if (checkForEmptyTour(loggedItem.Name, loggedItem.Fromstart, loggedItem.To, loggedItem.CreationTime,
+                    loggedItem.TourLength, loggedItem.Duration, loggedItem.Description))
+                {
+                    var rnd = new Random();
+                    var tourLogDAO = DALFactory.CreateTourLogDAO();
+                    TourLog logToReturn = null;
+                    do
+                    {
+                        var logID = rnd.Next(999999);
+                        logToReturn = tourLogDAO.AddNewItemLog(logID, date, maxVelocity, minVelocity, avVelocity, caloriesBurnt,
+                            duration, author, comment, loggedItem);
+                    } while (logToReturn == null);
 
-            return logToReturn;
+                    return logToReturn;
+                }
+                else throw new ArgumentException("Some Tour Infos are Empty");
+            }
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }
+
+            return null;
+
         }
 
         public TourItem CreateItem(string name, string fromstart, string to, DateTime creationTime, int tourLength,
             int duration, string description)
         {
-            //_____________________________________________________
-            var rnd = new Random();
-            var tourItemDAO = DALFactory.CreateTourItemDAO();
-            TourItem itemToReturn = null;
-            do
+            try
             {
-                var id = rnd.Next(999999);
-                itemToReturn = tourItemDAO.AddNewItem(id, name, fromstart, to, creationTime, tourLength, duration,
-                    description);
-            } while (itemToReturn == null);
+                if (checkForEmptyTour(name, fromstart, to, creationTime, tourLength, duration, description))
+                {
+                    var rnd = new Random();
+                    var tourItemDAO = DALFactory.CreateTourItemDAO();
+                    TourItem itemToReturn = null;
+                    do
+                    {
+                        var id = rnd.Next(999999);
+                        itemToReturn = tourItemDAO.AddNewItem(id, name, fromstart, to, creationTime, tourLength, duration,
+                            description);
+                    } while (itemToReturn == null);
 
-            getApiAsync(itemToReturn);
-            return itemToReturn;
+                    getApiAsync(itemToReturn);
+                    return itemToReturn;
+                }
+                else throw new ArgumentException("Some Tour Infos are Empty");
+            }
+            catch (Exception e)
+            {
+                log.Error(e.Message);
+            }
+
+            return null;
+
+        }
+
+        public bool checkForEmptyTour(string name, string fromstart, string to, DateTime creationTime, int tourLength,
+            int duration, string description)
+        {
+            if (name != "\"\"" && creationTime.ToString() != "\"\"" &&
+                fromstart != "\"\"" && to != "\"\"" && tourLength.ToString() != "\"\"" &&
+                duration.ToString() != "\"\"" && description != "\"\"")
+            {
+                return true;
+            }
+           else return false;
         }
 
         public void DeleteTourWithId(TourItem touritem)
         {
-            var tourItemDAO = DALFactory.CreateTourItemDAO();
-            tourItemDAO.DeleteById(touritem.TourID);
+            try
+            {
+                var tourItemDAO = DALFactory.CreateTourItemDAO();
+                tourItemDAO.DeleteById(touritem.TourID);
+                access.DeletePictureOfTour(touritem.TourID);
+                
+            }
+            catch (Exception ex)
+            {
+               log.Error(ex.Message);
+                
+            }
+           
         }
+
 
         public void DeleteLogWithId(TourLog tourLog)
         {
@@ -98,192 +151,36 @@ namespace TourPlaner_andreas.BL
             tourLogDao.DeleteById(tourLog.LogId);
         }
 
-        public bool CreateTourPdf(TourItem tourItem)
+        public bool CreateTourPdf(TourItem tourItem) // is in this class because of system.drawings error
         {
             try
             {
-                if (tourItem.Name != "\"\"" && tourItem.CreationTime.ToString() != "\"\"" &&
-                    tourItem.Fromstart != "\"\"" && tourItem.To != "\"\"" && tourItem.TourLength.ToString() != "\"\"" &&
-                    tourItem.Duration.ToString() != "\"\"" && tourItem.Description != "\"\"")
-                {
-                    var writer = new PdfWriter("Reports.pdf");
-                    var pdf = new PdfDocument(writer);
-                    var document = new Document(pdf);
-
-
-                    var header = new Paragraph("Tour Report: ")
-                        .SetFontSize(30);
-
-                    document.Add(header);
-
-
-                    var lines1 =
-                        new Paragraph("-------------------------------------------------------------------------- ")
-                            .SetFontSize(20);
-                    var tmpContent1 = new Paragraph("Name: " + tourItem.Name)
-                        .SetFontSize(10);
-                    var tmpContent2 = new Paragraph("Created on: " + tourItem.CreationTime)
-                        .SetFontSize(10);
-                    var tmpContent3 = new Paragraph("Tour length " + tourItem.TourLength + " km")
-                        .SetFontSize(10);
-                    var tmpContent4 = new Paragraph("Expected duration " + tourItem.Duration + " h")
-                        .SetFontSize(10);
-                    var tmpContent5 = new Paragraph("Description: " + tourItem.Description)
-                        .SetFontSize(8);
-                    var lines2 =
-                        new Paragraph("-------------------------------------------------------------------------- ")
-                            .SetFontSize(20);
-
-                    document.Add(lines1);
-                    document.Add(tmpContent1);
-                    document.Add(tmpContent2);
-                    document.Add(tmpContent3);
-                    document.Add(tmpContent4);
-                    document.Add(tmpContent5);
-                    document.Add(lines2);
-
-
-                    document.Close();
-                }
-
-
-                else
-                {
-                    throw new ArgumentException("Tour length or Expected Duration of " + tourItem.Name +
-                                                " in not in the right Format");
-                }
+                return access.CreateTourPdf(tourItem);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                log.Error(ex.Message);
-                return false;
+                log.Error(e.Message);
             }
 
-            return true;
+            return false;
+
         }
 
         public bool CreateTourLogsPdf(ObservableCollection<TourLog> tourLogs, TourItem tourItem)
         {
-            var writer = new PdfWriter("Reports.pdf");
-            var pdf = new PdfDocument(writer);
-            var document = new Document(pdf);
-
             try
             {
-                if (tourItem.Name != "\"\"" && tourItem.CreationTime.ToString() != "\"\"" &&
-                    tourItem.Fromstart != "\"\"" && tourItem.To != "\"\"" && tourItem.TourLength.ToString() != "\"\"" &&
-                    tourItem.Duration.ToString() != "\"\"" && tourItem.Description != "\"\"")
-                {
-                    var header = new Paragraph("Tour Report: ")
-                        .SetFontSize(30);
-
-                    document.Add(header);
-
-
-                    var lines = new Paragraph(
-                            "-------------------------------------------------------------------------- ")
-                        .SetFontSize(20);
-                    var tmpContent1 = new Paragraph("Name: " + tourItem.Name)
-                        .SetFontSize(10);
-                    var tmpContent2 = new Paragraph("Created on: " + tourItem.CreationTime)
-                        .SetFontSize(10);
-                    var tmpContent3 = new Paragraph("Tour length " + tourItem.TourLength + " km")
-                        .SetFontSize(10);
-                    var tmpContent4 = new Paragraph("Expected duration " + tourItem.Duration + " h")
-                        .SetFontSize(10);
-                    var tmpContent5 = new Paragraph("Description: " + tourItem.Description)
-                        .SetFontSize(8);
-
-
-                    document.Add(lines);
-                    document.Add(tmpContent1);
-                    document.Add(tmpContent2);
-                    document.Add(tmpContent3);
-                    document.Add(tmpContent4);
-                    document.Add(tmpContent5);
-                    document.Add(lines);
-                    foreach (var tourLog in tourLogs)
-                        try
-                        {
-                            if (tourLog.LogId.ToString() != "\"\"" && tourLog.Date.ToString() != "\"\"" &&
-                                tourLog.MaxVelocity.ToString() != "\"\"" && tourLog.MinVelocity.ToString() != "\"\"" &&
-                                tourLog.AvVelocity.ToString() != "\"\"" && tourLog.CaloriesBurnt.ToString() != "\"\"" &&
-                                tourLog.Duration.ToString() != "\"\"" && tourLog.Author != "\"\"" &&
-                                tourLog.Comment != "\"\"")
-                            {
-                                var tmplog1 = new Paragraph("LogID: " + tourLog.LogId)
-                                    .SetFontSize(20);
-                                var tmplog2 = new Paragraph("Date: " + tourLog.Date)
-                                    .SetFontSize(10);
-                                var tmplog3 = new Paragraph("Max Velocity: " + tourLog.MaxVelocity)
-                                    .SetFontSize(10);
-                                var tmplog4 = new Paragraph("Min Velocity: " + tourLog.MinVelocity)
-                                    .SetFontSize(10);
-                                var tmplog5 = new Paragraph("Av Velocity: " + tourLog.AvVelocity)
-                                    .SetFontSize(10);
-                                var tmplog6 = new Paragraph("CaloriesBurnt: " + tourLog.CaloriesBurnt)
-                                    .SetFontSize(10);
-                                var tmplog7 = new Paragraph("Duration: " + tourLog.Duration)
-                                    .SetFontSize(10);
-                                var tmplog8 = new Paragraph("Author: " + tourLog.Author)
-                                    .SetFontSize(10);
-                                var tmplog9 = new Paragraph("Comment: " + tourLog.Comment)
-                                    .SetFontSize(8);
-                              
-
-                                document.Add(tmplog1);
-                                document.Add(tmplog2);
-                                document.Add(tmplog3);
-                                document.Add(tmplog4);
-                                document.Add(tmplog5);
-                                document.Add(tmplog6);
-                                document.Add(tmplog7);
-                                document.Add(tmplog8);
-                                document.Add(tmplog9);
-                                document.Add(lines);
-                            }
-                            else
-                            {
-                                throw new NullReferenceException("Some Value of Log with ID: " + tourLog.LogId +
-                                                                 " is empty");
-                            }
-
-
-                        }
-                        catch (Exception ex)
-                        {
-                            document.Close();
-                            log.Error(ex.Message);
-                            return false;
-                        }
-
-
-
-                }
-                else
-                {
-                    throw new NullReferenceException("Some Value of " + tourItem.Name + " is empty");
-                }
+                return access.CreateTourLogsPdf(tourLogs, tourItem);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                document.Close();
-                log.Error(ex.Message);
-                return false;
+               log.Error(e.Message);
             }
 
-          
+            return false;
 
-
-            document.Close();
-            return true;
         }
 
-        public Image GetImage(int id)
-        {
-            return Image.FromFile(
-                "C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\TourPics\\" + id + ".jpg");
-        }
 
         public int ExportFile(ObservableCollection<TourLog> tourLogs, TourItem item,string path)
         {
@@ -324,5 +221,8 @@ namespace TourPlaner_andreas.BL
             var boundingBox = route["boundingBox"].Value<JObject>();
             mapi.getApiImage(sessionId, boundingBox, item.TourID);
         }
+
+      
+
     }
 }

@@ -16,8 +16,14 @@ namespace TourPlaner_andreas.BL {
         public bool CreateTourLogsPdf(ObservableCollection<TourLog> tourLogs, TourItem tourItem);
         public void DeleteTourWithId(TourItem touritem);
         public void DeleteLogWithId(TourLog logItem);
-        public Image GetImage(int tourId);
         public int ExportFile(ObservableCollection<TourLog> tourLogs,TourItem item,string path);
         public TourItem ImportFile(string path);
+        public bool checkForEmptyTour(string name, string fromstart, string to, DateTime creationTime, int tourLength,
+            int duration, string description);
+       
+        
+
+
+
     }
 }

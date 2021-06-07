@@ -12,6 +12,10 @@ namespace TourPlaner_andreas.DAL.common
     {
         public bool CreateTourItemLog(ObservableCollection<TourLog> Logs, TourItem item, string path);
         public string[] ImportFile(string path);
+        public bool DeletePictureOfTour(int id);
+        public string GetImagePath(int id);
+        public bool checkStringsEmptyTour(TourItem tourItem);
+        public bool checkLogsEmpty(TourLog tourLog);
 
     }
 }

@@ -95,14 +95,6 @@ namespace TourPlanerAndreasTests
 
         }
         [Test]
-        public void fileAccessTestrightFormat5()
-        {
-            string path = "C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\Testdata\\964011_TourItem.txt";
-            var check = fileAccess.ImportFile(path);
-            Assert.AreEqual(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"), check[4]);
-
-        }
-        [Test]
         public void fileAccessTestrightFormat6()
         {
             string path = "C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\Testdata\\964011_TourItem.txt";
@@ -128,7 +120,31 @@ namespace TourPlanerAndreasTests
             Assert.AreEqual( "nice tour", check[7]);
 
         }
+        [Test]
+        public void fileAccessDeletePicFail()
+        {
+            int id = 1;
+            var check = fileAccess.DeletePictureOfTour(id);
+            Assert.AreEqual(false, check);
 
-      
+        }
+        [Test]
+        public void fileAccessGetImagePathFail()
+        {
+            int id = 1;
+            var check = fileAccess.GetImagePath(id);
+            Assert.AreEqual(null, check);
+
+        }
+        [Test]
+        public void fileAccessGetImagePathSuccess()
+        {
+            int id = 265445;
+            var check = fileAccess.GetImagePath(id);
+            Assert.AreEqual("C:\\Users\\Andre\\source\\repos\\TourPlaner_andreas\\TourPlaner_andreas\\Pics\\265445.jpg", check);
+
+        }
+
+
     }
 }
